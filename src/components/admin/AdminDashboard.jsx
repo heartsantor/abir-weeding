@@ -610,8 +610,8 @@ function AdminDashboardInner({ isOpen, onClose }) {
                     pathEn="couple.bride.address.en"
                     isTextarea={true}
                     rows={2}
-                    placeholderBn="৩৬/১৬ রেইনবো টাওয়ার, রোড-৩, ওয়ার্ড-৬২, ছনটেক, যাত্রাবাড়ী, ঢাকা-১২৩৬"
-                    placeholderEn="36/16 Rainbow Tower, Road-3, Ward-62, sontek, Jatrabari, Dhaka-1236"
+                    placeholderBn="৩৬/১৬ রেইনবো টাওয়ার, রোড-৩, ওয়ার্ড-৬২, ছনটেক,\nযাত্রাবাড়ী, ঢাকা-১২৩৬"
+                    placeholderEn="36/16 Rainbow Tower, Road-3, Ward-62, Sontek,\nJatrabari, Dhaka-1236"
                   />
                 </div>
               </div>
@@ -871,8 +871,8 @@ function AdminDashboardInner({ isOpen, onClose }) {
                     pathEn="blessings.reception.names.en"
                     isTextarea={true}
                     rows={2}
-                    placeholderBn="মাহামুদ হোসেন, নাছির, আক্তার, রাসেল, শুভ, লিখন ও হাসান"
-                    placeholderEn="Mahmud Hossain, Nasir, Akter, Rasel, Shuvo, Likhon & Hasan"
+                    placeholderBn="মাহমুদ হোসেন, নাছির, আক্তার, রাসেল,\nশুভ, লিখন ও হাসান"
+                    placeholderEn="Mahmud Hossain, Nasir, Akter, Rasel,\nShuvo, Likhon & Hasan"
                   />
                 </div>
 

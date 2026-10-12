@@ -693,7 +693,7 @@ export default function InvitationPage() {
                 <h3 style={{ fontFamily: "'Great Vibes', 'Noto Serif Bengali', serif", fontSize: 'clamp(19px, 4.5vw, 22px)', color: '#8c5e6d', margin: '0 0 4px', fontWeight: 'bold', letterSpacing: '0.02em' }}>
                   {String(t(data.blessings.youngsters?.title) || '').replace(/-\s*[\u0983:]\s*/g, '-: ').replace(/\s*[\u0983:]\s*-/g, ' :-')}
                 </h3>
-                <p style={{ fontFamily: "'Noto Serif Bengali', serif", whiteSpace: 'pre-line', fontSize: 'clamp(9.5px, 2vw, 10.5px)', lineHeight: '1.5', color: '#7a5a67', margin: 0 }}>
+                <p style={{ fontFamily: "'Noto Serif Bengali', serif", whiteSpace: 'pre-line', fontSize: 'clamp(9.5px, 2vw, 10.5px)', lineHeight: '1.5', color: '#5b474e', margin: 0, fontWeight: '500' }}>
                   {t(data.blessings.youngsters?.names)}
                 </p>
               </div>

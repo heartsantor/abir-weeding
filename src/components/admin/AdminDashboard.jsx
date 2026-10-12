@@ -761,6 +761,14 @@ function AdminDashboardInner({ isOpen, onClose }) {
                   </div>
 
                   <BilingualField
+                    title="স্ক্র্যাচ কার্ড হেডার লেবেল"
+                    pathBn="saveDate.label.bn"
+                    pathEn="saveDate.label.en"
+                    placeholderBn="আমাদের বৌ-ভাতের দিন"
+                    placeholderEn="OUR RECEPTION DAY"
+                  />
+
+                  <BilingualField
                     title="অনুষ্ঠানের সময় ও পর্ব"
                     pathBn="events.reception.time.bn"
                     pathEn="events.reception.time.en"

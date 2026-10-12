@@ -174,7 +174,7 @@ body.locked {
 .couple-copy {
   position: absolute;
   left: 50%;
-  top: 48%;
+  top: 36.5%;
   transform: translate(-50%, -50%);
   width: min(78%, 380px);
   max-width: 380px;
@@ -920,7 +920,7 @@ body.locked {
     font-size: 11px;
   }
   .couple-copy {
-    top: 48%;
+    top: 36.5%;
     left: 50%;
     right: auto;
     transform: translate(-50%, -50%);

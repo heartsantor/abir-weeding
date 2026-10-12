@@ -386,7 +386,7 @@ export default function InvitationPage() {
               src={data.opening?.monogram ? `/${data.opening.monogram}` : '/assets/monogram-an-transparent.png'}
               alt="AN Royal Monogram"
             />
-            <p className="opening-subtitle">
+            <p className="opening-subtitle" style={{ wordBreak: 'keep-all', overflowWrap: 'normal' }}>
               {t(data.opening?.subtitle)}
             </p>
             <button
@@ -402,28 +402,32 @@ export default function InvitationPage() {
         {/* 2. Invitation Letter & Bismillah Section */}
         <section className="couple page" aria-label="The couple and their families">
           <div className="couple-copy">
-            <p className="eyebrow" style={{ whiteSpace: 'pre-line' }}>
+            <p className="eyebrow" style={{ whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal' }}>
               {t(data.couple?.eyebrow)}
             </p>
             <div className="couple-person">
-              <h1>{t(data.couple?.groom?.name)}</h1>
-              <p style={{ whiteSpace: 'pre-line', fontSize: 'clamp(10px, 2vw, 11.5px)', lineHeight: '1.35', margin: '3px auto 0', maxWidth: '280px' }}>
+              <h1 style={{ wordBreak: 'keep-all', overflowWrap: 'normal', whiteSpace: 'normal' }}>
+                {t(data.couple?.groom?.name)}
+              </h1>
+              <p style={{ whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal', fontSize: 'clamp(9.5px, 2.4vw, 11.5px)', lineHeight: '1.35', margin: '2px auto 0', maxWidth: '300px' }}>
                 <em>{t(data.couple?.groom?.parents)}</em>
               </p>
               {data.couple?.groom?.address && (
-                <p className="couple-address" style={{ fontSize: 'clamp(8.5px, 1.8vw, 10px)', color: '#7a5a67', marginTop: '2px', whiteSpace: 'pre-line', lineHeight: '1.35', maxWidth: '270px', margin: '2px auto 0' }}>
+                <p className="couple-address" style={{ fontSize: 'clamp(8.5px, 2.1vw, 10px)', color: '#7a5a67', marginTop: '2px', whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal', lineHeight: '1.35', maxWidth: '290px', margin: '2px auto 0' }}>
                   {t(data.couple?.groom?.address)}
                 </p>
               )}
             </div>
             <div className="couple-divider">&amp;</div>
             <div className="couple-person">
-              <h1>{t(data.couple?.bride?.name)}</h1>
-              <p style={{ whiteSpace: 'pre-line', fontSize: 'clamp(10px, 2vw, 11.5px)', lineHeight: '1.35', margin: '3px auto 0', maxWidth: '280px' }}>
+              <h1 style={{ wordBreak: 'keep-all', overflowWrap: 'normal', whiteSpace: 'normal' }}>
+                {t(data.couple?.bride?.name)}
+              </h1>
+              <p style={{ whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal', fontSize: 'clamp(9.5px, 2.4vw, 11.5px)', lineHeight: '1.35', margin: '2px auto 0', maxWidth: '300px' }}>
                 <em>{t(data.couple?.bride?.parents)}</em>
               </p>
               {data.couple?.bride?.address && (
-                <p className="couple-address" style={{ fontSize: 'clamp(8.5px, 1.8vw, 10px)', color: '#7a5a67', marginTop: '2px', whiteSpace: 'pre-line', lineHeight: '1.35', maxWidth: '270px', margin: '2px auto 0' }}>
+                <p className="couple-address" style={{ fontSize: 'clamp(8.5px, 2.1vw, 10px)', color: '#7a5a67', marginTop: '2px', whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal', lineHeight: '1.35', maxWidth: '290px', margin: '2px auto 0' }}>
                   {t(data.couple?.bride?.address)}
                 </p>
               )}

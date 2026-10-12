@@ -439,19 +439,20 @@ export default function InvitationPage() {
         {data.invitationLetter && (
           <section className="event penn page" aria-label="Formal Wedding Invitation Letter">
             <div className="event-copy penn-copy">
-              <div style={{ fontFamily: "'Noto Serif Bengali', 'Cormorant Garamond', serif", fontSize: 'clamp(15px, 3.2vw, 17.5px)', color: '#8c5e6d', marginBottom: '2px', fontWeight: 'bold', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Noto Serif Bengali', 'Cormorant Garamond', serif", fontSize: 'clamp(16px, 3.8vw, 19.5px)', color: '#5e1f31', marginBottom: '3px', fontWeight: '800', textAlign: 'center', letterSpacing: '0.01em', textShadow: '0 1px 1px rgba(255,255,255,0.8)' }}>
                 {t(data.invitationLetter.bismillahTitle)}
               </div>
-              <div style={{ fontSize: 'clamp(8px, 1.8vw, 9.5px)', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9d7582', marginBottom: '12px', fontFamily: "'Noto Serif Bengali', Montserrat, sans-serif", textAlign: 'center' }}>
+              <div style={{ fontSize: 'clamp(9.5px, 2.2vw, 11px)', color: '#703b4d', marginBottom: '8px', fontFamily: "'Noto Serif Bengali', Montserrat, sans-serif", fontWeight: '600', letterSpacing: '0.04em', textAlign: 'center' }}>
                 {t(data.invitationLetter.bismillahSub)}
               </div>
-              <div style={{ fontSize: 'clamp(11.5px, 2.4vw, 13px)', fontWeight: '600', color: '#7a5a67', marginBottom: '3px', textAlign: 'center', fontFamily: "'Noto Serif Bengali', serif" }}>
+              <div className="w-24 h-[1.5px] mx-auto bg-gradient-to-r from-transparent via-[#c78a9a] to-transparent mb-3 opacity-80" />
+              <div style={{ fontSize: 'clamp(12px, 2.6vw, 13.5px)', fontWeight: '700', color: '#4a2030', marginBottom: '3px', textAlign: 'center', fontFamily: "'Noto Serif Bengali', serif" }}>
                 {t(data.invitationLetter.salutation)}
               </div>
-              <div style={{ fontSize: 'clamp(11.5px, 2.4vw, 13px)', fontWeight: '600', color: '#7a5a67', marginBottom: '8px', textAlign: 'center', fontFamily: "'Noto Serif Bengali', serif" }}>
+              <div style={{ fontSize: 'clamp(12px, 2.6vw, 13.5px)', fontWeight: '700', color: '#4a2030', marginBottom: '10px', textAlign: 'center', fontFamily: "'Noto Serif Bengali', serif" }}>
                 {t(data.invitationLetter.greeting)}
               </div>
-              <p style={{ fontFamily: "'Noto Serif Bengali', serif", whiteSpace: 'pre-line', fontSize: 'clamp(10px, 2.1vw, 11.5px)', lineHeight: '1.62', textAlign: 'center', color: '#5b474e', margin: '0 auto', maxWidth: '320px' }}>
+              <p style={{ fontFamily: "'Noto Serif Bengali', serif", whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal', fontSize: 'clamp(10.5px, 2.4vw, 12px)', lineHeight: '1.7', textAlign: 'center', color: '#2b1920', margin: '0 auto', maxWidth: '320px', fontWeight: '500' }}>
                 {t(data.invitationLetter.body)}
               </p>
             </div>

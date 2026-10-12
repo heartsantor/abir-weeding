@@ -4,11 +4,13 @@ const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [lang, setLang] = useState(() => {
-    return localStorage.getItem('wedding_lang') || 'bn';
+    // Default language is English unless explicitly toggled by the user
+    return localStorage.getItem('wedding_lang_pref') || 'en';
   });
 
   useEffect(() => {
-    localStorage.setItem('wedding_lang', lang);
+    localStorage.setItem('wedding_lang_pref', lang);
+    document.documentElement.lang = lang;
   }, [lang]);
 
   const toggleLang = () => {
@@ -19,7 +21,7 @@ export const LanguageProvider = ({ children }) => {
   const t = (field) => {
     if (!field) return '';
     if (typeof field === 'string') return field;
-    return field[lang] || field['bn'] || field['en'] || '';
+    return field[lang] || field['en'] || field['bn'] || '';
   };
 
   return (

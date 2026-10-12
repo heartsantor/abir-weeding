@@ -329,41 +329,47 @@ export default function InvitationPage() {
       />
 
       {/* Language Toggle Fixed Top-Left */}
-      <button
-        onClick={toggleLang}
-        className="lang-toggle"
-        aria-label="Toggle language"
-        title="ভাষা পরিবর্তন / Switch Language"
-      >
-        <span style={{ fontWeight: lang === 'bn' ? '700' : '400', color: lang === 'bn' ? '#8d5d6c' : '#765463' }}>
-          বাং
-        </span>
-        <span style={{ opacity: 0.5 }}>/</span>
-        <span style={{ fontWeight: lang === 'en' ? '700' : '400', color: lang === 'en' ? '#8d5d6c' : '#765463' }}>
-          EN
-        </span>
-      </button>
+      {!isAdminOpen && (
+        <button
+          onClick={toggleLang}
+          className="lang-toggle"
+          aria-label="Toggle language"
+          title="ভাষা পরিবর্তন / Switch Language"
+        >
+          <span style={{ fontWeight: lang === 'bn' ? '700' : '400', color: lang === 'bn' ? '#8d5d6c' : '#765463' }}>
+            বাং
+          </span>
+          <span style={{ opacity: 0.5 }}>/</span>
+          <span style={{ fontWeight: lang === 'en' ? '700' : '400', color: lang === 'en' ? '#8d5d6c' : '#765463' }}>
+            EN
+          </span>
+        </button>
+      )}
 
       {/* Floating Music Button */}
-      <button
-        id="musicToggle"
-        className={`music-toggle ${musicActive ? 'active' : ''}`}
-        type="button"
-        aria-pressed={musicIsOn}
-        aria-label={musicIsOn ? 'Turn music off' : 'Turn music on'}
-        onClick={toggleMusic}
-      >
-        ♫ <span>{musicIsOn ? 'ON' : 'OFF'}</span>
-      </button>
+      {!isAdminOpen && (
+        <button
+          id="musicToggle"
+          className={`music-toggle ${musicActive ? 'active' : ''}`}
+          type="button"
+          aria-pressed={musicIsOn}
+          aria-label={musicIsOn ? 'Turn music off' : 'Turn music on'}
+          onClick={toggleMusic}
+        >
+          ♫ <span>{musicIsOn ? 'ON' : 'OFF'}</span>
+        </button>
+      )}
 
       {/* Admin Floating Badge */}
-      <button
-        onClick={() => setIsAdminOpen(true)}
-        className="admin-badge-trigger"
-        title="Admin Control Panel"
-      >
-        ⚙ Admin
-      </button>
+      {!isAdminOpen && (
+        <button
+          onClick={() => setIsAdminOpen(true)}
+          className="admin-badge-trigger"
+          title="Admin Control Panel"
+        >
+          ⚙ Admin
+        </button>
+      )}
 
       {/* Main Single Column Container matching reference website */}
       <main className="invite">

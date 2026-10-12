@@ -221,7 +221,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
 
   if (!isAuthenticated) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto animate-fadeIn">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto animate-fadeIn">
         <div className="relative w-full max-w-sm sm:max-w-md bg-gradient-to-b from-[#fffafd] to-[#fbf2f6] text-[#4a333d] rounded-3xl shadow-[0_25px_60px_-15px_rgba(115,55,75,0.35)] border border-[#e8c8d2] overflow-hidden p-6 sm:p-8 text-center">
           {/* Subtle decorative gold floral corners or glow */}
           <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-gradient-to-br from-[#ffdbe5]/40 to-transparent blur-2xl pointer-events-none" />
@@ -316,7 +316,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto animate-fadeIn">
       <div className="relative w-full max-w-5xl max-h-[94vh] flex flex-col bg-gradient-to-b from-[#fffafd] to-[#fcf4f7] text-[#4a333d] rounded-3xl shadow-[0_25px_70px_rgba(110,45,65,0.3)] border border-[#e8c8d2] overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 border-b border-[#edd2dc] bg-gradient-to-r from-[#faeef3] via-[#fff5f8] to-[#fbf0f4]">

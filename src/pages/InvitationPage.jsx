@@ -529,7 +529,7 @@ export default function InvitationPage() {
               {t(data.couple?.eyebrow)}
             </p>
             <div className="couple-person">
-              <h1 style={{ wordBreak: 'keep-all', overflowWrap: 'normal', whiteSpace: 'normal' }}>
+              <h1 style={{ wordBreak: 'keep-all', overflowWrap: 'normal', whiteSpace: 'pre-line' }}>
                 {t(data.couple?.groom?.name)}
               </h1>
               <p style={{ whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal', fontSize: 'clamp(9.5px, 2.4vw, 11.5px)', lineHeight: '1.35', margin: '2px auto 0', maxWidth: '300px' }}>
@@ -543,7 +543,7 @@ export default function InvitationPage() {
             </div>
             <div className="couple-divider">&amp;</div>
             <div className="couple-person">
-              <h1 style={{ wordBreak: 'keep-all', overflowWrap: 'normal', whiteSpace: 'normal' }}>
+              <h1 style={{ wordBreak: 'keep-all', overflowWrap: 'normal', whiteSpace: 'pre-line' }}>
                 {t(data.couple?.bride?.name)}
               </h1>
               <p style={{ whiteSpace: 'pre-line', wordBreak: 'keep-all', overflowWrap: 'normal', fontSize: 'clamp(9.5px, 2.4vw, 11.5px)', lineHeight: '1.35', margin: '2px auto 0', maxWidth: '300px' }}>
@@ -797,9 +797,9 @@ export default function InvitationPage() {
               {t(data.guest?.message)}
             </p>
             <div className="guest-signoff">
-              <span>{t(data.guest?.signoff?.name1)}</span>
+              <span style={{ whiteSpace: 'pre-line', textAlign: 'center' }}>{t(data.guest?.signoff?.name1)}</span>
               <strong>&amp;</strong>
-              <span>{t(data.guest?.signoff?.name2)}</span>
+              <span style={{ whiteSpace: 'pre-line', textAlign: 'center' }}>{t(data.guest?.signoff?.name2)}</span>
             </div>
           </div>
         </section>

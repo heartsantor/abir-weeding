@@ -546,8 +546,10 @@ function AdminDashboardInner({ isOpen, onClose }) {
                     title="বরের নাম"
                     pathBn="couple.groom.name.bn"
                     pathEn="couple.groom.name.en"
-                    placeholderBn="মোঃ আব্দুল রামিম (আবির)"
-                    placeholderEn="Md. Abdul Ramim (Abir)"
+                    isTextarea={true}
+                    rows={2}
+                    placeholderBn="মোঃ আব্দুল রামিম\n(আবির)"
+                    placeholderEn="Md. Abdul Ramim\n(Abir)"
                   />
 
                   <BilingualField
@@ -588,8 +590,10 @@ function AdminDashboardInner({ isOpen, onClose }) {
                     title="কনের নাম"
                     pathBn="couple.bride.name.bn"
                     pathEn="couple.bride.name.en"
-                    placeholderBn="মোসাম্মৎ সোমাইয়া আক্তার (নিশি)"
-                    placeholderEn="Mosammet Somaiya Akter (Nishi)"
+                    isTextarea={true}
+                    rows={2}
+                    placeholderBn="মোসাম্মৎ সোমাইয়া আক্তার\n(নিশি)"
+                    placeholderEn="Mosammet Somaiya Akter\n(Nishi)"
                   />
 
                   <BilingualField

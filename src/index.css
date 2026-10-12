@@ -215,7 +215,7 @@ body.locked {
   color: #7b5b67;
   letter-spacing: .01em;
   margin: 0 auto;
-  white-space: normal;
+  white-space: pre-line;
   word-break: keep-all;
   overflow-wrap: normal;
   text-align: center;

@@ -44,8 +44,8 @@
         "en": "The Groom"
       },
       "name": {
-        "bn": "মোঃ আব্দুল রামিম (আবির)",
-        "en": "Md. Abdul Ramim (Abir)"
+        "bn": "মোঃ আব্দুল রামিম\n(আবির)",
+        "en": "Md. Abdul Ramim\n(Abir)"
       },
       "father": {
         "bn": "মোঃ আমিনুর রহমান (আমিন)",
@@ -71,8 +71,8 @@
         "en": "The Bride"
       },
       "name": {
-        "bn": "মোসাম্মৎ সোমাইয়া আক্তার (নিশি)",
-        "en": "Mosammet Somaiya Akter (Nishi)"
+        "bn": "মোসাম্মৎ সোমাইয়া আক্তার\n(নিশি)",
+        "en": "Mosammet Somaiya Akter\n(Nishi)"
       },
       "father": {
         "bn": "মোঃ মোস্তফা জামাল ভুঁইয়া",
@@ -252,12 +252,12 @@
     },
     "signoff": {
       "name1": {
-        "bn": "মোঃ আব্দুল রামিম (আবির)",
-        "en": "Md. Abdul Ramim (Abir)"
+        "bn": "মোঃ আব্দুল রামিম\n(আবির)",
+        "en": "Md. Abdul Ramim\n(Abir)"
       },
       "name2": {
-        "bn": "মোসাম্মৎ সোমাইয়া আক্তার (নিশি)",
-        "en": "Mosammet Somaiya Akter (Nishi)"
+        "bn": "মোসাম্মৎ সোমাইয়া আক্তার\n(নিশি)",
+        "en": "Mosammet Somaiya Akter\n(Nishi)"
       }
     }
   },

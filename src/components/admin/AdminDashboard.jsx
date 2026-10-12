@@ -251,9 +251,8 @@ export default function AdminDashboard({ isOpen, onClose }) {
             <h3 className="text-xl font-bold font-bengali-serif text-white mb-2">
               অ্যাডমিন লগইন
             </h3>
-            <p className="text-xs text-gray-400 mb-6 font-montserrat">
-              Username: <code className="text-[#fbf5b7]">abir</code> | Password:{' '}
-              <code className="text-[#fbf5b7]">Trialvo@123</code>
+            <p className="text-xs text-gray-400 mb-6">
+              দয়া করে আপনার অ্যাডমিন ইউজারনেম ও পাসওয়ার্ড দিন।
             </p>
 
             {authError && (
@@ -271,7 +270,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="abir"
+                  placeholder="ইউজারনেম লিখুন"
                   className="w-full px-4 py-2.5 rounded-xl bg-[#2a1b2b] border border-gray-700 focus:border-[#c9a96e] text-white text-sm outline-none transition-colors"
                   required
                 />

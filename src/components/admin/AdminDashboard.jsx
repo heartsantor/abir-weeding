@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback, createContext, useContext } from 'react';
 import {
   X,
   Lock,
@@ -20,7 +20,92 @@ import {
 } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 
-export default function AdminDashboard({ isOpen, onClose }) {
+// Context to share getVal and setVal with fields without unmounting on keystroke
+const AdminFormContext = createContext({
+  getVal: () => '',
+  setVal: () => {},
+});
+
+// Top-level Reusable Dual-Language Input Field (prevents remounting and focus loss)
+const BilingualField = React.memo(function BilingualField({
+  title,
+  helper,
+  pathBn,
+  pathEn,
+  isTextarea = false,
+  rows = 2,
+  placeholderBn = '',
+  placeholderEn = '',
+}) {
+  const { getVal, setVal } = useContext(AdminFormContext);
+
+  return (
+    <div className="bg-white/95 p-3.5 sm:p-4 rounded-2xl border border-[#edd6de] shadow-xs hover:border-[#dfbac5] transition-colors space-y-2.5">
+      <div className="flex items-baseline justify-between">
+        <label className="text-xs sm:text-sm font-semibold text-[#663e4d] font-bengali-serif">
+          {title}
+        </label>
+        {helper && <span className="text-[10.5px] text-[#9b7280]">{helper}</span>}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
+        {/* Bengali Field */}
+        <div className="space-y-1">
+          <div className="flex items-center gap-1.5 text-[11px]">
+            <span className="px-2 py-0.5 rounded-md bg-[#fdf0e0] border border-[#f3d7b8] text-[#915a20] font-bold text-[10px]">
+              বাংলা (BN)
+            </span>
+          </div>
+          {isTextarea ? (
+            <textarea
+              rows={rows}
+              value={getVal(pathBn)}
+              onChange={(e) => setVal(pathBn, e.target.value)}
+              placeholder={placeholderBn}
+              className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all leading-relaxed shadow-xs"
+            />
+          ) : (
+            <input
+              type="text"
+              value={getVal(pathBn)}
+              onChange={(e) => setVal(pathBn, e.target.value)}
+              placeholder={placeholderBn}
+              className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all shadow-xs"
+            />
+          )}
+        </div>
+
+        {/* English Field */}
+        <div className="space-y-1">
+          <div className="flex items-center gap-1.5 text-[11px]">
+            <span className="px-2 py-0.5 rounded-md bg-[#fcecf1] border border-[#f2c7d4] text-[#9e4663] font-bold text-[10px]">
+              ENGLISH (EN)
+            </span>
+          </div>
+          {isTextarea ? (
+            <textarea
+              rows={rows}
+              value={getVal(pathEn)}
+              onChange={(e) => setVal(pathEn, e.target.value)}
+              placeholder={placeholderEn}
+              className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all leading-relaxed shadow-xs"
+            />
+          ) : (
+            <input
+              type="text"
+              value={getVal(pathEn)}
+              onChange={(e) => setVal(pathEn, e.target.value)}
+              placeholder={placeholderEn}
+              className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all shadow-xs"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+function AdminDashboardInner({ isOpen, onClose }) {
   const { data, updateData, resetData } = useData();
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return sessionStorage.getItem('wedding_admin_auth') === 'true';
@@ -33,17 +118,66 @@ export default function AdminDashboard({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('letter');
   const [rawJsonText, setRawJsonText] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [formData, setFormData] = useState(() => data || {});
+  const [formData, setFormData] = useState(() => (data ? JSON.parse(JSON.stringify(data)) : {}));
 
-  // Sync formData when data loads or modal opens
+  // Sync formData safely when modal opens or initial data loads
+  const prevIsOpenRef = useRef(false);
   useEffect(() => {
-    if (data) {
-      setFormData(JSON.parse(JSON.stringify(data)));
-      setRawJsonText(JSON.stringify(data, null, 2));
+    if (isOpen && (!prevIsOpenRef.current || !formData || Object.keys(formData).length === 0)) {
+      if (data) {
+        setFormData(JSON.parse(JSON.stringify(data)));
+        setRawJsonText(JSON.stringify(data, null, 2));
+      }
     }
-  }, [data, isOpen]);
+    prevIsOpenRef.current = isOpen;
+  }, [isOpen, data]);
 
-  if (!isOpen) return null;
+  // Helper getter for nested path
+  const getVal = useCallback(
+    (path, fallback = '') => {
+      if (!formData) return fallback;
+      const parts = path.split('.');
+      let cur = formData;
+      for (const p of parts) {
+        if (cur && typeof cur === 'object' && p in cur) {
+          cur = cur[p];
+        } else {
+          return fallback;
+        }
+      }
+      return cur ?? fallback;
+    },
+    [formData]
+  );
+
+  // Helper setter for nested path - purely updates formData without side-effect state calls
+  const setVal = useCallback((path, value) => {
+    setFormData((prev) => {
+      const copy = JSON.parse(JSON.stringify(prev || {}));
+      const parts = path.split('.');
+      let cur = copy;
+      for (let i = 0; i < parts.length - 1; i++) {
+        if (!cur[parts[i]]) cur[parts[i]] = {};
+        cur = cur[parts[i]];
+      }
+      cur[parts[parts.length - 1]] = value;
+      return copy;
+    });
+  }, []);
+
+  const handleTabClick = (tabId) => {
+    if (tabId === 'raw') {
+      setRawJsonText(JSON.stringify(formData, null, 2));
+    } else if (activeTab === 'raw') {
+      try {
+        const parsed = JSON.parse(rawJsonText);
+        setFormData(parsed);
+      } catch (err) {
+        // preserve current formData if raw json had syntax error
+      }
+    }
+    setActiveTab(tabId);
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -61,37 +195,6 @@ export default function AdminDashboard({ isOpen, onClose }) {
     sessionStorage.removeItem('wedding_admin_auth');
     setUsername('');
     setPassword('');
-  };
-
-  // Helper getter for nested path
-  const getVal = (path, fallback = '') => {
-    if (!formData) return fallback;
-    const parts = path.split('.');
-    let cur = formData;
-    for (const p of parts) {
-      if (cur && typeof cur === 'object' && p in cur) {
-        cur = cur[p];
-      } else {
-        return fallback;
-      }
-    }
-    return cur ?? fallback;
-  };
-
-  // Helper setter for nested path
-  const setVal = (path, value) => {
-    setFormData((prev) => {
-      const copy = JSON.parse(JSON.stringify(prev || {}));
-      const parts = path.split('.');
-      let cur = copy;
-      for (let i = 0; i < parts.length - 1; i++) {
-        if (!cur[parts[i]]) cur[parts[i]] = {};
-        cur = cur[parts[i]];
-      }
-      cur[parts[parts.length - 1]] = value;
-      setRawJsonText(JSON.stringify(copy, null, 2));
-      return copy;
-    });
   };
 
   const handleSave = () => {
@@ -112,9 +215,9 @@ export default function AdminDashboard({ isOpen, onClose }) {
     }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (window.confirm('আপনি কি পূর্বনির্ধারিত ডিফল্ট ডেটায় ফিরে যেতে চান?')) {
-      resetData();
+      await resetData();
       alert('সফলভাবে রিসেট সম্পন্ন হয়েছে!');
       onClose();
     }
@@ -132,82 +235,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
     downloadAnchor.remove();
   };
 
-  // Reusable Dual-Language Input Field
-  const BilingualField = ({
-    title,
-    helper,
-    pathBn,
-    pathEn,
-    isTextarea = false,
-    rows = 2,
-    placeholderBn = '',
-    placeholderEn = '',
-  }) => {
-    return (
-      <div className="bg-white/95 p-3.5 sm:p-4 rounded-2xl border border-[#edd6de] shadow-xs hover:border-[#dfbac5] transition-colors space-y-2.5">
-        <div className="flex items-baseline justify-between">
-          <label className="text-xs sm:text-sm font-semibold text-[#663e4d] font-bengali-serif">
-            {title}
-          </label>
-          {helper && <span className="text-[10.5px] text-[#9b7280]">{helper}</span>}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
-          {/* Bengali Field */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-[11px]">
-              <span className="px-2 py-0.5 rounded-md bg-[#fdf0e0] border border-[#f3d7b8] text-[#915a20] font-bold text-[10px]">
-                বাংলা (BN)
-              </span>
-            </div>
-            {isTextarea ? (
-              <textarea
-                rows={rows}
-                value={getVal(pathBn)}
-                onChange={(e) => setVal(pathBn, e.target.value)}
-                placeholder={placeholderBn}
-                className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all leading-relaxed shadow-xs"
-              />
-            ) : (
-              <input
-                type="text"
-                value={getVal(pathBn)}
-                onChange={(e) => setVal(pathBn, e.target.value)}
-                placeholder={placeholderBn}
-                className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all shadow-xs"
-              />
-            )}
-          </div>
-
-          {/* English Field */}
-          <div className="space-y-1">
-            <div className="flex items-center gap-1.5 text-[11px]">
-              <span className="px-2 py-0.5 rounded-md bg-[#fcecf1] border border-[#f2c7d4] text-[#9e4663] font-bold text-[10px]">
-                ENGLISH (EN)
-              </span>
-            </div>
-            {isTextarea ? (
-              <textarea
-                rows={rows}
-                value={getVal(pathEn)}
-                onChange={(e) => setVal(pathEn, e.target.value)}
-                placeholder={placeholderEn}
-                className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all leading-relaxed shadow-xs"
-              />
-            ) : (
-              <input
-                type="text"
-                value={getVal(pathEn)}
-                onChange={(e) => setVal(pathEn, e.target.value)}
-                placeholder={placeholderEn}
-                className="w-full px-3 py-2 rounded-xl bg-[#fffefd] border border-[#e2c7cf] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4a323b] placeholder-[#a78b95] text-xs outline-none transition-all shadow-xs"
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  };
+  if (!isOpen) return null;
 
   const tabs = [
     { id: 'letter', label: 'আমন্ত্রণপত্র', icon: FileText },
@@ -316,68 +344,69 @@ export default function AdminDashboard({ isOpen, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto animate-fadeIn">
-      <div className="relative w-full max-w-5xl max-h-[94vh] flex flex-col bg-gradient-to-b from-[#fffafd] to-[#fcf4f7] text-[#4a333d] rounded-3xl shadow-[0_25px_70px_rgba(110,45,65,0.3)] border border-[#e8c8d2] overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 border-b border-[#edd2dc] bg-gradient-to-r from-[#faeef3] via-[#fff5f8] to-[#fbf0f4]">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#f4dbe3] border border-[#e2b8c5] flex items-center justify-center shrink-0 shadow-sm">
-              <img
-                src="/assets/monogram-an-transparent.png"
-                alt="AN"
-                className="w-6 h-6 object-contain"
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-sm sm:text-base font-bold font-montserrat text-[#683f4e] leading-tight">
-                  Wedding Admin Control Panel
-                </h2>
-                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-[#c78a9a]/20 text-[#854558] text-[10px] font-semibold">
-                  Live Sync
+    <AdminFormContext.Provider value={{ getVal, setVal }}>
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto animate-fadeIn">
+        <div className="relative w-full max-w-5xl max-h-[94vh] flex flex-col bg-gradient-to-b from-[#fffafd] to-[#fcf4f7] text-[#4a333d] rounded-3xl shadow-[0_25px_70px_rgba(110,45,65,0.3)] border border-[#e8c8d2] overflow-hidden">
+          {/* Header */}
+          <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 border-b border-[#edd2dc] bg-gradient-to-r from-[#faeef3] via-[#fff5f8] to-[#fbf0f4]">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-[#f4dbe3] border border-[#e2b8c5] flex items-center justify-center shrink-0 shadow-sm">
+                <img
+                  src="/assets/monogram-an-transparent.png"
+                  alt="AN"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm sm:text-base font-bold font-montserrat text-[#683f4e] leading-tight">
+                    Wedding Admin Control Panel
+                  </h2>
+                  <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-[#c78a9a]/20 text-[#854558] text-[10px] font-semibold">
+                    Live Sync
+                  </span>
+                </div>
+                <span className="text-[11px] text-[#946977]">
+                  বাংলা ও ইংরেজি উভয়ের জন্য ফিল্ডভিত্তিক লাইভ ডাটা ম্যানেজমেন্ট
                 </span>
               </div>
-              <span className="text-[11px] text-[#946977]">
-                বাংলা ও ইংরেজি উভয়ের জন্য ফিল্ডভিত্তিক লাইভ ডাটা ম্যানেজমেন্ট
-              </span>
             </div>
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-full bg-[#f4dfe5]/70 hover:bg-[#ebd0d8] text-[#7d5060] transition-colors cursor-pointer shadow-sm"
+              title="বন্ধ করুন"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-full bg-[#f4dfe5]/70 hover:bg-[#ebd0d8] text-[#7d5060] transition-colors cursor-pointer shadow-sm"
-            title="বন্ধ করুন"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
 
-        {/* Dashboard Content Container */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Top Toolbar */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-2.5 bg-[#fdf5f8] border-b border-[#edd4dc] text-xs">
-            {/* Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-thin">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-medium transition-all whitespace-nowrap text-xs cursor-pointer ${
-                      isActive
-                        ? 'bg-gradient-to-r from-[#ba7b8e] to-[#995b6e] text-white font-bold shadow-[0_2px_8px_rgba(163,101,119,0.35)]'
-                        : 'bg-white/80 hover:bg-white text-[#7d5161] border border-[#ebd3db]'
-                    }`}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
-            </div>
+          {/* Dashboard Content Container */}
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Top Toolbar */}
+            <div className="flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-2.5 bg-[#fdf5f8] border-b border-[#edd4dc] text-xs">
+              {/* Tabs */}
+              <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-thin">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => handleTabClick(tab.id)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-medium transition-all whitespace-nowrap text-xs cursor-pointer ${
+                        isActive
+                          ? 'bg-gradient-to-r from-[#ba7b8e] to-[#995b6e] text-white font-bold shadow-[0_2px_8px_rgba(163,101,119,0.35)]'
+                          : 'bg-white/80 hover:bg-white text-[#7d5161] border border-[#ebd3db]'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-            {/* Action buttons */}
+              {/* Action buttons */}
             <div className="flex items-center gap-2">
               <button
                 onClick={handleExportJson}
@@ -1217,5 +1246,10 @@ export default function AdminDashboard({ isOpen, onClose }) {
         </div>
       </div>
     </div>
-  );
+  </AdminFormContext.Provider>
+);
 }
+
+const AdminDashboard = React.memo(AdminDashboardInner);
+export default AdminDashboard;
+

@@ -1,8 +1,71 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 import { useData } from '../context/DataContext';
 import { useLanguage } from '../context/LanguageContext';
 import AdminDashboard from '../components/admin/AdminDashboard';
+
+// Standalone CountdownClock component (isolates the 1-second interval so InvitationPage never re-renders)
+const CountdownClock = React.memo(function CountdownClock({ targetDate, lang }) {
+  const [countdown, setCountdown] = useState({
+    days: '--',
+    hours: '--',
+    minutes: '--',
+    seconds: '--',
+  });
+
+  useEffect(() => {
+    const update = () => {
+      const targetStr = targetDate || '2026-10-25T13:30:00';
+      const target = new Date(targetStr).getTime();
+      const diff = Math.max(0, target - Date.now());
+
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      const formatVal = (num) => {
+        if (lang === 'bn') {
+          const bnNums = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+          return String(num).padStart(2, '0').split('').map((c) => bnNums[c] || c).join('');
+        }
+        return String(num).padStart(2, '0');
+      };
+
+      setCountdown({
+        days: formatVal(d),
+        hours: formatVal(h),
+        minutes: formatVal(m),
+        seconds: formatVal(s),
+      });
+    };
+
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, [targetDate, lang]);
+
+  return (
+    <div className="countdown" id="countdown">
+      <div>
+        <strong id="days">{countdown.days}</strong>
+        <span>{lang === 'bn' ? 'দিন' : 'DAYS'}</span>
+      </div>
+      <div>
+        <strong id="hours">{countdown.hours}</strong>
+        <span>{lang === 'bn' ? 'ঘণ্টা' : 'HOURS'}</span>
+      </div>
+      <div>
+        <strong id="minutes">{countdown.minutes}</strong>
+        <span>{lang === 'bn' ? 'মিনিট' : 'MINUTES'}</span>
+      </div>
+      <div>
+        <strong id="seconds">{countdown.seconds}</strong>
+        <span>{lang === 'bn' ? 'সেকেন্ড' : 'SECONDS'}</span>
+      </div>
+    </div>
+  );
+});
 
 export default function InvitationPage() {
   const { data, loading } = useData();
@@ -22,14 +85,7 @@ export default function InvitationPage() {
 
   const [photoIndex, setPhotoIndex] = useState(0);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
-
-  // Countdown timer
-  const [countdown, setCountdown] = useState({
-    days: '--',
-    hours: '--',
-    minutes: '--',
-    seconds: '--',
-  });
+  const handleCloseAdmin = useCallback(() => setIsAdminOpen(false), []);
 
   // Handle body locked class
   useEffect(() => {
@@ -310,38 +366,7 @@ export default function InvitationPage() {
     }, 8500);
   };
 
-  // Countdown timer
-  useEffect(() => {
-    const update = () => {
-      const targetStr = data?.saveDate?.targetDate || '2026-10-25T13:30:00';
-      const target = new Date(targetStr).getTime();
-      const diff = Math.max(0, target - Date.now());
 
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-
-      const formatVal = (num) => {
-        if (lang === 'bn') {
-          const bnNums = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-          return String(num).padStart(2, '0').split('').map(c => bnNums[c] || c).join('');
-        }
-        return String(num).padStart(2, '0');
-      };
-
-      setCountdown({
-        days: formatVal(d),
-        hours: formatVal(h),
-        minutes: formatVal(m),
-        seconds: formatVal(s),
-      });
-    };
-
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, [data, lang]);
 
   // Open Invitation handler
   const handleOpenInvitation = async () => {
@@ -585,24 +610,7 @@ export default function InvitationPage() {
                 aria-label="Scratch to reveal the wedding date"
               />
             </div>
-            <div className="countdown" id="countdown">
-              <div>
-                <strong id="days">{countdown.days}</strong>
-                <span>{lang === 'bn' ? 'দিন' : 'DAYS'}</span>
-              </div>
-              <div>
-                <strong id="hours">{countdown.hours}</strong>
-                <span>{lang === 'bn' ? 'ঘণ্টা' : 'HOURS'}</span>
-              </div>
-              <div>
-                <strong id="minutes">{countdown.minutes}</strong>
-                <span>{lang === 'bn' ? 'মিনিট' : 'MINUTES'}</span>
-              </div>
-              <div>
-                <strong id="seconds">{countdown.seconds}</strong>
-                <span>{lang === 'bn' ? 'সেকেন্ড' : 'SECONDS'}</span>
-              </div>
-            </div>
+            <CountdownClock targetDate={data.saveDate?.targetDate} lang={lang} />
           </div>
         </section>
 
@@ -821,7 +829,7 @@ export default function InvitationPage() {
       {/* Admin Panel Modal */}
       <AdminDashboard
         isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
+        onClose={handleCloseAdmin}
       />
     </>
   );

@@ -581,8 +581,8 @@ export default function AdminDashboard({ isOpen, onClose }) {
                     pathEn="couple.bride.address.en"
                     isTextarea={true}
                     rows={2}
-                    placeholderBn="ঠিকানা: রহিমা টাওয়ার, রোড-৩, ওয়ার্ড-৬২, ছনটেক, যাত্রাবাড়ী, ঢাকা।"
-                    placeholderEn="Rahima Tower, Road-3, Ward-62, Jatrabari, Dhaka"
+                    placeholderBn="৩৬/১৬ রেইনবো টাওয়ার, রোড-৩, ওয়ার্ড-৬২, ছনটেক, যাত্রাবাড়ী, ঢাকা-১২৩৬"
+                    placeholderEn="36/16 Rainbow Tower, Road-3, Ward-62, Chontek, Jatrabari, Dhaka-1236"
                   />
                 </div>
               </div>

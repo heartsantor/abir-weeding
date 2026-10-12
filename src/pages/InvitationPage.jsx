@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import confetti from 'canvas-confetti';
 import { useData } from '../context/DataContext';
 import { useLanguage } from '../context/LanguageContext';
 import AdminDashboard from '../components/admin/AdminDashboard';
@@ -49,11 +50,15 @@ export default function InvitationPage() {
     if (!canvas || scratched) return;
 
     let drawing = false;
-    let erased = 0;
+    let erasedCount = 0;
     let revealed = false;
+    let initialized = false;
+    let lastPoint = null;
+
+    const ctx = canvas.getContext('2d');
 
     const setupScratch = () => {
-      if (revealed || scratched) return;
+      if (revealed || scratched || initialized) return;
       const rect = canvas.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
 
@@ -61,119 +66,172 @@ export default function InvitationPage() {
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
 
-      const ctx = canvas.getContext('2d');
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Shimmering Rose Gold foil gradient
+      // Shimmering Rose Gold foil metallic gradient
       const g = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-      g.addColorStop(0, '#d8a8b5');
-      g.addColorStop(0.3, '#f5dbe3');
-      g.addColorStop(0.6, '#e0b3c0');
+      g.addColorStop(0, '#c792a2');
+      g.addColorStop(0.25, '#f7dfe6');
+      g.addColorStop(0.5, '#deb0be');
+      g.addColorStop(0.75, '#fdeef3');
       g.addColorStop(1, '#be8699');
 
       ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, rect.width, rect.height);
 
+      // Delicate foil border
+      ctx.strokeStyle = '#a8677c';
+      ctx.lineWidth = 1.2;
+      ctx.strokeRect(5, 5, rect.width - 10, rect.height - 10);
+
       // Foil text
-      ctx.fillStyle = '#734b5b';
+      ctx.fillStyle = '#6b3547';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = '600 11px Montserrat, sans-serif';
-      ctx.fillText('SCRATCH TO REVEAL', rect.width / 2, rect.height / 2 - 8);
+      ctx.font = 'bold 11px Montserrat, sans-serif';
+      ctx.fillText('✧ SCRATCH TO REVEAL ✧', rect.width / 2, rect.height / 2 - 9);
 
-      ctx.font = '18px serif';
-      ctx.fillText('✧  ♡  ✧', rect.width / 2, rect.height / 2 + 18);
+      ctx.font = 'bold 11px "Noto Serif Bengali", sans-serif';
+      ctx.fillStyle = '#824558';
+      ctx.fillText('ঘষে তারিখ দেখুন', rect.width / 2, rect.height / 2 + 10);
 
       ctx.globalCompositeOperation = 'destination-out';
+      initialized = true;
     };
 
-    // Use ResizeObserver so canvas is always precisely sized when rendered
-    const ro = new ResizeObserver(() => {
-      setupScratch();
-    });
-    ro.observe(canvas);
-
-    // Initial setup with fallbacks
+    // Initialize with fallbacks
     setupScratch();
-    const tId1 = setTimeout(setupScratch, 100);
-    const tId2 = setTimeout(setupScratch, 400);
+    const tId1 = setTimeout(setupScratch, 50);
+    const tId2 = setTimeout(setupScratch, 250);
+    const tId3 = setTimeout(setupScratch, 600);
 
     const performReveal = () => {
       if (revealed || scratched) return;
       revealed = true;
       setScratched(true);
-      canvas.style.transition = 'opacity 0.45s ease';
+      canvas.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
       canvas.style.opacity = '0';
+      canvas.style.transform = 'scale(1.03)';
+      canvas.style.pointerEvents = 'none';
       setTimeout(() => {
         canvas.style.display = 'none';
-      }, 480);
+      }, 520);
       triggerRosePetals();
+      try {
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { y: 0.55 },
+          colors: ['#c78a9a', '#e8c5cf', '#ffd1dc', '#d4af37', '#ffffff'],
+        });
+      } catch (e) {}
     };
 
-    const doScratch = (clientX, clientY) => {
-      if (!drawing || revealed || scratched) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
-      const ctx = canvas.getContext('2d');
+    const scratchAt = (x, y) => {
+      if (!ctx || revealed || scratched) return;
+      ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
       ctx.arc(x, y, 22, 0, Math.PI * 2);
       ctx.fill();
-
-      erased++;
-      if (erased > 28) {
+      erasedCount++;
+      if (erasedCount > 16) {
         performReveal();
       }
     };
 
-    const onPointerDown = (e) => {
+    const scratchLine = (p1, p2) => {
+      if (!ctx || !p1 || !p2 || revealed || scratched) return;
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.lineWidth = 38;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.moveTo(p1.x, p1.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+      erasedCount += 2;
+      if (erasedCount > 18) {
+        performReveal();
+      }
+    };
+
+    // Touch event listeners for mobile (with passive: false to prevent scrolling)
+    const onTouchStart = (e) => {
+      if (revealed || scratched) return;
+      e.preventDefault();
+      drawing = true;
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      lastPoint = { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+      scratchAt(lastPoint.x, lastPoint.y);
+    };
+
+    const onTouchMove = (e) => {
+      if (!drawing || revealed || scratched) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      const currentPoint = { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+      scratchLine(lastPoint, currentPoint);
+      lastPoint = currentPoint;
+    };
+
+    const onTouchEnd = () => {
+      drawing = false;
+      lastPoint = null;
+    };
+
+    // Mouse / Pointer event listeners
+    const onMouseDown = (e) => {
       if (revealed || scratched) return;
       drawing = true;
-      try {
-        canvas.setPointerCapture(e.pointerId);
-      } catch (err) {}
-      doScratch(e.clientX, e.clientY);
+      const rect = canvas.getBoundingClientRect();
+      lastPoint = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      scratchAt(lastPoint.x, lastPoint.y);
     };
 
-    const onPointerMove = (e) => {
-      if (!drawing) return;
-      doScratch(e.clientX, e.clientY);
+    const onMouseMove = (e) => {
+      if (!drawing || revealed || scratched) return;
+      const rect = canvas.getBoundingClientRect();
+      const currentPoint = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      scratchLine(lastPoint, currentPoint);
+      lastPoint = currentPoint;
     };
 
-    const onPointerUp = (e) => {
+    const onMouseUp = () => {
       drawing = false;
-      try {
-        canvas.releasePointerCapture(e.pointerId);
-      } catch (err) {}
+      lastPoint = null;
     };
 
     const onClick = (e) => {
       if (revealed || scratched) return;
-      drawing = true;
-      doScratch(e.clientX, e.clientY);
-      drawing = false;
-      erased += 4;
-      if (erased > 20) {
+      const rect = canvas.getBoundingClientRect();
+      scratchAt(e.clientX - rect.left, e.clientY - rect.top);
+      erasedCount += 6;
+      if (erasedCount > 10) {
         performReveal();
       }
     };
 
-    canvas.addEventListener('pointerdown', onPointerDown);
-    canvas.addEventListener('pointermove', onPointerMove);
-    canvas.addEventListener('pointerup', onPointerUp);
-    canvas.addEventListener('pointercancel', onPointerUp);
+    canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+    canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+    canvas.addEventListener('touchend', onTouchEnd);
+    canvas.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
     canvas.addEventListener('click', onClick);
 
     return () => {
-      ro.disconnect();
       clearTimeout(tId1);
       clearTimeout(tId2);
-      canvas.removeEventListener('pointerdown', onPointerDown);
-      canvas.removeEventListener('pointermove', onPointerMove);
-      canvas.removeEventListener('pointerup', onPointerUp);
-      canvas.removeEventListener('pointercancel', onPointerUp);
+      clearTimeout(tId3);
+      canvas.removeEventListener('touchstart', onTouchStart);
+      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd);
+      canvas.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
       canvas.removeEventListener('click', onClick);
     };
   }, [scratched]);

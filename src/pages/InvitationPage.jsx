@@ -53,58 +53,91 @@ export default function InvitationPage() {
     let erasedCount = 0;
     let revealed = false;
     let initialized = false;
+    let userStartedScratching = false;
     let lastPoint = null;
 
-    const ctx = canvas.getContext('2d');
+    const paintFoil = () => {
+      if (revealed || scratched || userStartedScratching) return;
+      const cvs = canvasRef.current;
+      if (!cvs) return;
 
-    const setupScratch = () => {
-      if (revealed || scratched || initialized) return;
-      const rect = canvas.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
+      const rect = cvs.getBoundingClientRect();
+      const parent = cvs.parentElement;
+      const w = rect.width > 0 ? rect.width : (parent?.clientWidth || cvs.offsetWidth || 320);
+      const h = rect.height > 0 ? rect.height : (parent?.clientHeight || cvs.offsetHeight || 216);
+
+      if (!w || !h) return;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(rect.width * dpr);
-      canvas.height = Math.round(rect.height * dpr);
+      cvs.width = Math.round(w * dpr);
+      cvs.height = Math.round(h * dpr);
 
+      const ctx = cvs.getContext('2d');
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       // Shimmering Rose Gold foil metallic gradient
-      const g = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+      const g = ctx.createLinearGradient(0, 0, w, h);
       g.addColorStop(0, '#c792a2');
-      g.addColorStop(0.25, '#f7dfe6');
-      g.addColorStop(0.5, '#deb0be');
-      g.addColorStop(0.75, '#fdeef3');
+      g.addColorStop(0.2, '#fceaf0');
+      g.addColorStop(0.45, '#deb0be');
+      g.addColorStop(0.7, '#fef0f5');
       g.addColorStop(1, '#be8699');
 
       ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = g;
-      ctx.fillRect(0, 0, rect.width, rect.height);
+      ctx.fillRect(0, 0, w, h);
 
-      // Delicate foil border
+      // Double delicate decorative foil border
       ctx.strokeStyle = '#a8677c';
-      ctx.lineWidth = 1.2;
-      ctx.strokeRect(5, 5, rect.width - 10, rect.height - 10);
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(6, 6, w - 12, h - 12);
+      ctx.strokeStyle = '#deb0be';
+      ctx.lineWidth = 0.8;
+      ctx.strokeRect(9, 9, w - 18, h - 18);
 
       // Foil text
       ctx.fillStyle = '#6b3547';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = 'bold 11px Montserrat, sans-serif';
-      ctx.fillText('✧ SCRATCH TO REVEAL ✧', rect.width / 2, rect.height / 2 - 9);
+      ctx.font = 'bold 12px Montserrat, sans-serif';
+      ctx.fillText('✧ SCRATCH TO REVEAL ✧', w / 2, h / 2 - 12);
 
-      ctx.font = 'bold 11px "Noto Serif Bengali", sans-serif';
-      ctx.fillStyle = '#824558';
-      ctx.fillText('ঘষে তারিখ দেখুন', rect.width / 2, rect.height / 2 + 10);
+      ctx.font = 'bold 12px "Noto Serif Bengali", sans-serif';
+      ctx.fillStyle = '#7a394e';
+      ctx.fillText('ঘষে বিয়ের তারিখ দেখুন', w / 2, h / 2 + 10);
+
+      ctx.font = '14px serif';
+      ctx.fillStyle = '#a8677c';
+      ctx.fillText('✧  ♡  ✧', w / 2, h / 2 + 28);
 
       ctx.globalCompositeOperation = 'destination-out';
       initialized = true;
     };
 
-    // Initialize with fallbacks
-    setupScratch();
-    const tId1 = setTimeout(setupScratch, 50);
-    const tId2 = setTimeout(setupScratch, 250);
-    const tId3 = setTimeout(setupScratch, 600);
+    // Paint immediately and at intervals to ensure foil is always present
+    paintFoil();
+    const tId1 = setTimeout(paintFoil, 50);
+    const tId2 = setTimeout(paintFoil, 200);
+    const tId3 = setTimeout(paintFoil, 500);
+    const tId4 = setTimeout(paintFoil, 1000);
+
+    // IntersectionObserver to paint the instant section 4 enters the screen
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !userStartedScratching) {
+          paintFoil();
+        }
+      });
+    }, { threshold: [0, 0.1, 0.25] });
+    io.observe(canvas);
+
+    // ResizeObserver to adjust to layout size
+    const ro = new ResizeObserver(() => {
+      if (!userStartedScratching && !revealed && !scratched) {
+        paintFoil();
+      }
+    });
+    ro.observe(canvas);
 
     const performReveal = () => {
       if (revealed || scratched) return;
@@ -129,29 +162,33 @@ export default function InvitationPage() {
     };
 
     const scratchAt = (x, y) => {
-      if (!ctx || revealed || scratched) return;
+      if (revealed || scratched) return;
+      userStartedScratching = true;
+      const ctx = canvas.getContext('2d');
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
-      ctx.arc(x, y, 22, 0, Math.PI * 2);
+      ctx.arc(x, y, 26, 0, Math.PI * 2);
       ctx.fill();
       erasedCount++;
-      if (erasedCount > 16) {
+      if (erasedCount > 10) {
         performReveal();
       }
     };
 
     const scratchLine = (p1, p2) => {
-      if (!ctx || !p1 || !p2 || revealed || scratched) return;
+      if (!p1 || !p2 || revealed || scratched) return;
+      userStartedScratching = true;
+      const ctx = canvas.getContext('2d');
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
-      ctx.lineWidth = 38;
+      ctx.lineWidth = 44;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.moveTo(p1.x, p1.y);
       ctx.lineTo(p2.x, p2.y);
       ctx.stroke();
       erasedCount += 2;
-      if (erasedCount > 18) {
+      if (erasedCount > 12) {
         performReveal();
       }
     };
@@ -208,8 +245,8 @@ export default function InvitationPage() {
       if (revealed || scratched) return;
       const rect = canvas.getBoundingClientRect();
       scratchAt(e.clientX - rect.left, e.clientY - rect.top);
-      erasedCount += 6;
-      if (erasedCount > 10) {
+      erasedCount += 4;
+      if (erasedCount > 8) {
         performReveal();
       }
     };
@@ -226,6 +263,9 @@ export default function InvitationPage() {
       clearTimeout(tId1);
       clearTimeout(tId2);
       clearTimeout(tId3);
+      clearTimeout(tId4);
+      io.disconnect();
+      ro.disconnect();
       canvas.removeEventListener('touchstart', onTouchStart);
       canvas.removeEventListener('touchmove', onTouchMove);
       canvas.removeEventListener('touchend', onTouchEnd);
@@ -234,7 +274,7 @@ export default function InvitationPage() {
       window.removeEventListener('mouseup', onMouseUp);
       canvas.removeEventListener('click', onClick);
     };
-  }, [scratched]);
+  }, [scratched, isLocked, openingDisplayNone]);
 
   // Rose petals generator matching original
   const triggerRosePetals = () => {
@@ -540,6 +580,8 @@ export default function InvitationPage() {
               <canvas
                 ref={canvasRef}
                 id="scratchCanvas"
+                width={320}
+                height={216}
                 aria-label="Scratch to reveal the wedding date"
               />
             </div>

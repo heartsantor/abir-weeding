@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BF953F" />
+      <stop offset="50%" stop-color="#FCF6BA" />
+      <stop offset="100%" stop-color="#AA771C" />
+    </linearGradient>
+  </defs>
+  <!-- Interlocking rings -->
+  <circle cx="42" cy="55" r="28" fill="none" stroke="url(#gold)" stroke-width="7" />
+  <circle cx="58" cy="45" r="28" fill="none" stroke="url(#gold)" stroke-width="7" />
+  <!-- Diamond sparkle on top ring -->
+  <polygon points="58,12 63,17 58,22 53,17" fill="#FCF6BA" />
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BF953F" />
+      <stop offset="25%" stop-color="#FCF6BA" />
+      <stop offset="50%" stop-color="#B38728" />
+      <stop offset="75%" stop-color="#FBF5B7" />
+      <stop offset="100%" stop-color="#AA771C" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Decorative Ring -->
+  <circle cx="250" cy="250" r="225" fill="none" stroke="url(#goldGrad)" stroke-width="2" stroke-dasharray="6,4" opacity="0.6"/>
+  <circle cx="250" cy="250" r="215" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" />
+  <circle cx="250" cy="250" r="190" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.4" />
+
+  <!-- Laurel Wreath Leaves Left -->
+  <g fill="none" stroke="url(#goldGrad)" stroke-width="2">
+    <path d="M 120 280 C 100 230, 110 160, 160 110 C 180 90, 210 80, 240 75" />
+    <!-- Leaves left -->
+    <path d="M 115 250 Q 95 240 105 225 Q 120 235 115 250 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 118 210 Q 100 195 112 180 Q 128 195 118 210 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 132 170 Q 118 150 135 140 Q 148 158 132 170 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 158 135 Q 148 112 168 105 Q 178 125 158 135 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 195 105 Q 190 85 210 80 Q 218 100 195 105 Z" fill="url(#goldGrad)" opacity="0.8"/>
+
+    <!-- Laurel Wreath Leaves Right -->
+    <path d="M 380 280 C 400 230, 390 160, 340 110 C 320 90, 290 80, 260 75" />
+    <path d="M 385 250 Q 405 240 395 225 Q 380 235 385 250 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 382 210 Q 400 195 388 180 Q 372 195 382 210 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 368 170 Q 382 150 365 140 Q 352 158 368 170 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 342 135 Q 352 112 332 105 Q 322 125 342 135 Z" fill="url(#goldGrad)" opacity="0.8"/>
+    <path d="M 305 105 Q 310 85 290 80 Q 282 100 305 105 Z" fill="url(#goldGrad)" opacity="0.8"/>
+  </g>
+
+  <!-- Crown at Top -->
+  <g fill="url(#goldGrad)" stroke="url(#goldGrad)" stroke-width="1" filter="url(#glow)">
+    <path d="M 230 75 L 235 55 L 243 65 L 250 48 L 257 65 L 265 55 L 270 75 Z" />
+    <circle cx="250" cy="44" r="3" />
+    <circle cx="235" cy="51" r="2.5" />
+    <circle cx="265" cy="51" r="2.5" />
+  </g>
+
+  <!-- Bottom Ribbon / Flourish -->
+  <path d="M 190 380 C 230 405, 270 405, 310 380 C 290 395, 210 395, 190 380 Z" fill="url(#goldGrad)" />
+  <circle cx="250" cy="390" r="4" fill="url(#goldGrad)" />
+
+  <!-- Monogram Center Text -->
+  <text x="250" y="235" 
+        font-family="'Noto Serif Bengali', serif" 
+        font-size="62" 
+        font-weight="700" 
+        fill="url(#goldGrad)" 
+        text-anchor="middle"
+        filter="url(#glow)">আ ♥ নি</text>
+
+  <text x="250" y="295" 
+        font-family="'Cinzel Decorative', 'Playfair Display', serif" 
+        font-size="24" 
+        letter-spacing="10" 
+        fill="url(#goldGrad)" 
+        text-anchor="middle"
+        opacity="0.95">ABIR &amp; NISHI</text>
+
+  <line x1="200" y1="318" x2="300" y2="318" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="250" cy="318" r="3" fill="url(#goldGrad)" />
+  
+  <text x="250" y="345" 
+        font-family="'Montserrat', sans-serif" 
+        font-size="12" 
+        letter-spacing="5" 
+        fill="url(#goldGrad)" 
+        text-anchor="middle"
+        opacity="0.8">25 • 10 • 2026</text>
+</svg>

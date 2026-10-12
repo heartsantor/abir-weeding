@@ -1,0 +1,280 @@
+{
+  "opening": {
+    "monogram": "assets/monogram-an-transparent.png",
+    "bismillah": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "subtitle": {
+      "bn": "শুভ বিবাহোত্তর বৌ-ভাত অনুষ্ঠান",
+      "en": "Wedding Celebration & Reception"
+    },
+    "openButton": {
+      "bn": "দাওয়াতনামা খুলুন",
+      "en": "Open Invitation"
+    }
+  },
+  "invitationLetter": {
+    "bismillahTitle": {
+      "bn": "বিসমিল্লাহির রাহমানির রাহীম",
+      "en": "Bismillahir Rahmanir Rahim"
+    },
+    "bismillahSub": {
+      "bn": "পরম করুণাময় ও অসীম দয়ালু আল্লাহর নামে",
+      "en": "In the Name of Allah, the Most Gracious, the Most Merciful"
+    },
+    "salutation": {
+      "bn": "জনাব / জনাবা,",
+      "en": "Dear Sir / Madam,"
+    },
+    "greeting": {
+      "bn": "আসসালামু আলাইকুম,",
+      "en": "Assalamu Alaikum,"
+    },
+    "body": {
+      "bn": "পরম করুনাময় আল্লাহ তা'য়ালার অশেষ রহমতে আসছে ২৫শে অক্টোবর ২০২৬ইং (৯ই কার্তিক ১৪৩৩বাং) রোজ রবিবার মোঃ আমিনুর রহমান (আমিন) সাহেবের একমাত্র পুত্র মোঃ আব্দুল রামিম (আবির) এর সাথে মোঃ মোস্তফা জামাল ভুঁইয়া সাহেবের প্রথম কন্যা মোসাম্মৎ সোমাইয়া আক্তার (নিশি) বিবাহোত্তর বৌ-ভাত অনুষ্ঠানের আয়োজন করা হয়েছে। উক্ত অনুষ্ঠানে আপনার/আপনাদের উপস্থিতি ও দোয়া একান্তভাবে কামনা করছি।",
+      "en": "By the grace and mercy of Almighty Allah, on Sunday, 25 October 2026 (12 Kartik 1433 Bengali Era), the wedding reception ceremony of Md. Abdul Ramim (Abir), beloved son of Md. Aminur Rahman (Amin) and Rahana Begum, with Mosammet Somaiya Akter (Nishi), beloved daughter of Md. Mostofa Zamal Bhuiyan and Rojina Akter, has been arranged.\n\nWe cordially invite you and your family to attend the wedding ceremony and grace the occasion with your presence and blessings."
+    }
+  },
+  "couple": {
+    "eyebrow": {
+      "bn": "আমরা আনন্দের সাথে আপনাকে ও আপনার পরিবারকে\nআমন্ত্রণ জানাচ্ছি আমাদের বিবাহোত্তর অনুষ্ঠানে",
+      "en": "We cordially invite you with\nyour family for the covenant\nwedding ceremony of"
+    },
+    "groom": {
+      "tag": {
+        "bn": "বর বেশে",
+        "en": "The Groom"
+      },
+      "name": {
+        "bn": "মোঃ আব্দুল রামিম (আবির)",
+        "en": "Md. Abdul Ramim (Abir)"
+      },
+      "father": {
+        "bn": "মোঃ আমিনুর রহমান (আমিন)",
+        "en": "Md. Aminur Rahman (Amin)"
+      },
+      "mother": {
+        "bn": "রেহেনা বেগম",
+        "en": "Rahana Begum"
+      },
+      "parents": {
+        "bn": "পিতা: মোঃ আমিনুর রহমান (আমিন)\nমাতা: রেহেনা বেগম",
+        "en": "Son of Mr. Md. Aminur Rahman (Amin)\n& Mrs. Rahana Begum"
+      },
+      "address": {
+        "bn": "গ্রাম: নয়াগাঁও পূর্বপাড়া, ডাক: পঞ্চসার, থানা ও জেলা: মুন্সীগঞ্জ-১৫০০",
+        "en": "Vill: Noyagaon Purbo Para, Post: Panchasar, Munshiganj-1500"
+      }
+    },
+    "divider": "&",
+    "bride": {
+      "tag": {
+        "bn": "কনে সাজে",
+        "en": "The Bride"
+      },
+      "name": {
+        "bn": "মোসাম্মৎ সোমাইয়া আক্তার (নিশি)",
+        "en": "Mosammet Somaiya Akter (Nishi)"
+      },
+      "father": {
+        "bn": "মোঃ মোস্তফা জামাল ভুঁইয়া",
+        "en": "Md. Mostofa Zamal Bhuiyan"
+      },
+      "mother": {
+        "bn": "রোজিনা আক্তার",
+        "en": "Rojina Akter"
+      },
+      "parents": {
+        "bn": "পিতা: মোঃ মোস্তফা জামাল ভুঁইয়া\nমাতা: রোজিনা আক্তার",
+        "en": "Daughter of Mr. Md. Mostofa Zamal Bhuiyan\n& Mrs. Rojina Akter"
+      },
+      "address": {
+        "bn": "রহিমা টাওয়ার, রোড-৩, ওয়ার্ড-৬২, ছলনটেক, যাত্রাবাড়ী, ঢাকা",
+        "en": "Rahima Tower, Road-3, Ward-62, Cholontika, Jatrabari, Dhaka"
+      }
+    }
+  },
+  "saveDate": {
+    "label": {
+      "bn": "আমাদের বৌ-ভাতের দিন",
+      "en": "OUR WEDDING DAY"
+    },
+    "day": {
+      "bn": "২৫",
+      "en": "25"
+    },
+    "month": {
+      "bn": "অক্টোবর",
+      "en": "OCTOBER"
+    },
+    "year": {
+      "bn": "২০২৬ • রবিবার",
+      "en": "2026 • SUNDAY"
+    },
+    "bengaliEra": {
+      "bn": "৯ই কার্তিক ১৪৩৩ বাং",
+      "en": "12 Kartik 1433 Bengali Era"
+    },
+    "targetDate": "2026-10-25T13:30:00"
+  },
+  "events": {
+    "holud": {
+      "tag": {
+        "bn": "গায়ে হলুদ",
+        "en": "Gaye Holud"
+      },
+      "title": {
+        "bn": "শুভ গায়ে হলুদ ও সঙ্গীত সন্ধ্যা",
+        "en": "Gaye Holud & Sangeet Evening"
+      },
+      "date": {
+        "bn": "শনিবার, ২৪শে অক্টোবর ২০২৬ইং (৮ই কার্তিক ১৪৩৩বাং)",
+        "en": "Saturday, 24 October 2026 (11 Kartik 1433 BE)"
+      },
+      "time": {
+        "bn": "সন্ধ্যা ৭:০০ ঘটিকা",
+        "en": "7:00 PM (Evening)"
+      },
+      "venue": {
+        "bn": "বরের নিজ বাসস্থান",
+        "en": "Groom's Residence"
+      },
+      "place": {
+        "bn": "বরের নিজ বাসস্থান\nগ্রাম: নয়াগাঁও পূর্বপাড়া, পঞ্চসার, মুন্সীগঞ্জ",
+        "en": "Groom's Residence\nVill: Noyagaon Purbo Para, Panchasar, Munshiganj"
+      },
+      "mapUrl": "https://maps.app.goo.gl/F8BpyknDbEjNUFy16",
+      "mapText": {
+        "bn": "গুগল ম্যাপে লোকেশন দেখুন",
+        "en": "Open Google Maps"
+      }
+    },
+    "reception": {
+      "tag": {
+        "bn": "বৌ-ভাত ও প্রীতিভোজ",
+        "en": "Wedding Reception"
+      },
+      "title": {
+        "bn": "শুভ বৌ-ভাত ও প্রীতিভোজ",
+        "en": "Wedding Reception & Grand Feast"
+      },
+      "date": {
+        "bn": "রবিবার, ২৫শে অক্টোবর ২০২৬ইং (৯ই কার্তিক ১৪৩৩বাং)",
+        "en": "Sunday, 25 October 2026 (12 Kartik 1433 BE)"
+      },
+      "time": {
+        "bn": "দুপুর ১:৩১ মিনিট (প্রীতিভোজ)",
+        "en": "1:31 PM (Grand Feast)"
+      },
+      "venue": {
+        "bn": "ফ্রেন্ডস কিচেন এন্ড পার্টি সেন্টার",
+        "en": "Friends Kitchen & Party Palace"
+      },
+      "place": {
+        "bn": "ফ্রেন্ডস কিচেন এন্ড পার্টি সেন্টার\n১২০ কাজী প্লাজা, খালইষ্ট, জুবলী রোড, মুন্সীগঞ্জ",
+        "en": "Friends Kitchen & Party Palace\n120 Kazi Plaza, Khalist, Jubilee Road, Munshiganj"
+      },
+      "mapUrl": "https://maps.app.goo.gl/F8BpyknDbEjNUFy16",
+      "mapText": {
+        "bn": "গুগল ম্যাপে লোকেশন দেখুন",
+        "en": "Open Google Maps"
+      }
+    }
+  },
+  "blessings": {
+    "wishes": {
+      "title": {
+        "bn": "-: শুভেচ্ছান্তে :-",
+        "en": "Best Wishes From"
+      },
+      "names": {
+        "bn": "মোঃ আমিনুর রহমান (আমিন)\nরেহেনা বেগম\nনূরজাহান বেগম",
+        "en": "Md. Aminur Rahman (Amin)\nRahana Begum\nNurjahan Begum"
+      }
+    },
+    "reception": {
+      "title": {
+        "bn": "-: অভ্যর্থনায় :-",
+        "en": "Cordially Welcomed By"
+      },
+      "names": {
+        "bn": "মাহমুদ হোসেন, নাছির, আক্তার, রাসেল, শুভ, লিখন ও হাসান",
+        "en": "Mahmud Hossain, Nasir, Akter, Rasel, Shuvo, Likhon & Hasan"
+      }
+    },
+    "youngsters": {
+      "title": {
+        "bn": "-: হৈ চৈ :-",
+        "en": "The Little Stars"
+      },
+      "names": {
+        "bn": "মায়ান, মুয়াজ, নুহাশ, রিয়ান, রাফা, রিমি, অনি, নুজাইম, আরিবা, নিরা, নুসরাত, নাবিলা, তন্ময়, নাবিল ও মাহবুব",
+        "en": "Mayan, Muaz, Nuhash, Riyan, Rafa, Rimi, Oni, Nuzaim, Ariba, Nira, Nusrat, Nabila, Tonmoy, Nabil & Mahbub"
+      }
+    },
+    "contacts": [
+      "01715-106248",
+      "01627-105009"
+    ]
+  },
+  "gallery": {
+    "show": false,
+    "title": {
+      "bn": "ফটো গ্যালারি",
+      "en": "Photo Gallery"
+    },
+    "photos": [
+      "assets/couple-1.jpg",
+      "assets/couple-2.jpg",
+      "assets/couple-3.jpg"
+    ],
+    "quotes": [
+      {
+        "bn": "“দুটি মন, দুটি হৃদয়, এক নতুন জীবনের শুভ সূচনা।”",
+        "en": "“Two hearts, one beautiful beginning.”"
+      },
+      {
+        "bn": "“চিরন্তন ভালোবাসার মায়াবী বন্ধনে বাঁধা দুটি প্রাণ।”",
+        "en": "“In every moment, I choose you.”"
+      },
+      {
+        "bn": "“চিরকাল আজ থেকে শুরু।”",
+        "en": "“And so our forever begins.”"
+      }
+    ]
+  },
+  "guest": {
+    "title": {
+      "bn": "প্রিয় অতিথি",
+      "en": "Dear Guest"
+    },
+    "message": {
+      "bn": "আপনার উপস্থিতি, আশীর্বাদ\nও ভালোবাসা আমাদের এই\nউৎসবকে পরিপূর্ণ করবে",
+      "en": "Your presence, Blessing\nand love will make our\ncelebration truly complete"
+    },
+    "signoff": {
+      "name1": {
+        "bn": "মোঃ আব্দুল রামিম (আবির)",
+        "en": "Md. Abdul Ramim (Abir)"
+      },
+      "name2": {
+        "bn": "মোসাম্মৎ সোমাইয়া আক্তার (নিশি)",
+        "en": "Mosammet Somaiya Akter (Nishi)"
+      }
+    }
+  },
+  "footer": {
+    "title": {
+      "bn": "ধন্যবাদ",
+      "en": "Thank You"
+    },
+    "message": {
+      "bn": "আপনাদের সাথে এই দিনটি\nউদযাপন করতে পারব বলে\nআমরা অপেক্ষায় আছি।",
+      "en": "We look forward to\ncelebrating the day\nwith you."
+    },
+    "credit": {
+      "bn": "ভালোবাসায় তৈরি করেছেন",
+      "en": "Crafted with love by"
+    },
+    "reference": "trialvo.com",
+    "referenceUrl": "https://trialvo.com"
+  }
+}

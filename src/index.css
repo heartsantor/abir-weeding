@@ -1,0 +1,1080 @@
+@import "tailwindcss";
+
+:root {
+  --rose: #c77f91;
+  --deep: #765466;
+  --gold: #a88650;
+  --ink: #5d4b50;
+  --cream: #fff8f2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #f7dfe8;
+  color: var(--ink);
+  font-family: Montserrat, 'Hind Siliguri', sans-serif;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body.locked {
+  overflow: hidden;
+  height: 100dvh;
+  min-height: 100dvh;
+  touch-action: none;
+}
+
+.invite {
+  width: min(100%, 600px);
+  margin: 0 auto;
+  background: #f7dfe8;
+  box-shadow: 0 0 50px #6d4d5518;
+  position: relative;
+}
+
+.page {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  isolation: isolate;
+}
+
+.page:not(.opening) {
+  margin-top: -16px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.55) 11px, #000 26px, #000 calc(100% - 28px), rgba(0,0,0,.55) calc(100% - 11px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,.55) 11px, #000 26px, #000 calc(100% - 28px), rgba(0,0,0,.55) calc(100% - 11px), transparent 100%);
+}
+
+/* Opening */
+.opening + .page {
+  margin-top: 0;
+}
+
+.opening {
+  margin: 0;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  aspect-ratio: auto;
+  background-image: url('/assets/opening-bg.jpg');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .85s ease, visibility .85s ease, filter .85s ease, transform .85s ease;
+  background-size: 100% 100%;
+}
+
+.opening.hidden {
+  opacity: 0;
+  visibility: hidden;
+  filter: blur(7px);
+  transform: scale(1.012);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.opening-monogram-wrap {
+  position: absolute;
+  left: 50%;
+  top: 49%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.monogram {
+  width: 100%;
+  max-width: 390px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px #6e4b3c35);
+}
+
+.opening-subtitle {
+  margin: 3px 0 3px;
+  transform: translateY(-15px);
+  color: #8c6670;
+  font: 600 clamp(16px, 4.4vw, 22px) 'Great Vibes', 'Noto Serif Bengali', serif;
+  letter-spacing: .02em;
+  text-align: center;
+}
+
+.open-btn {
+  margin-top: -4px;
+  border: 1px solid #a98752;
+  background: #fff8f0e8;
+  color: #775b3f;
+  border-radius: 40px;
+  padding: 12px 27px;
+  font: 500 11px Montserrat, 'Hind Siliguri', sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 7px 22px #9e718222;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+.open-btn:active {
+  transform: scale(.98);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 7px 22px #9e718222;
+  }
+  50% {
+    box-shadow: 0 8px 30px #9e718244;
+  }
+}
+
+/* Couple */
+.couple {
+  aspect-ratio: 1024/1536;
+  background-image: url('/assets/couple-bg.jpg');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.couple-copy {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  width: min(72%, 390px);
+  max-width: 390px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-sizing: border-box;
+}
+
+.eyebrow {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto 8px;
+  text-align: center;
+  letter-spacing: .02em;
+  font: 700 clamp(10px, 2.2vw, 12px)/1.35 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+  color: #8f756c;
+  text-transform: none;
+  max-width: 320px;
+}
+
+.couple-person {
+  width: 100%;
+  text-align: center;
+}
+
+.couple-person h1 {
+  font: 700 clamp(16px, 3.8vw, 22px)/1.25 'Allura', 'Noto Serif Bengali', serif;
+  color: #7b5b67;
+  letter-spacing: .01em;
+  margin: 0;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+
+.couple-person p {
+  font: 500 clamp(10.5px, 2.1vw, 12px)/1.35 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+  color: #65565b;
+  margin: 3px auto 0;
+  max-width: 290px;
+}
+
+.couple-person p em {
+  font-style: italic;
+}
+
+.couple-divider {
+  font: 500 18px 'Bodoni Moda', serif;
+  color: #c78a9a;
+  margin: 4px 0;
+  line-height: 1;
+}
+
+/* Save the Date */
+.save-date {
+  aspect-ratio: 864/1536;
+  background-image: url('/assets/save-date-bg.png');
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.save-overlay {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  top: 28%;
+  text-align: center;
+  z-index: 2;
+}
+
+.scratch-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.48;
+  border-radius: 8px;
+  overflow: hidden;
+  transform: translateY(-5.5%);
+}
+
+.revealed-date {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 12%;
+  color: #966277;
+  background: transparent;
+}
+
+.revealed-date span {
+  font: 8px Montserrat, 'Hind Siliguri', sans-serif;
+  letter-spacing: .18em;
+}
+
+.revealed-date strong {
+  font: 600 clamp(50px, 10vw, 66px)/.82 'Cormorant Garamond', 'Tiro Bangla', 'Noto Serif Bengali', serif;
+  color: #a65f79;
+}
+
+.revealed-date b {
+  font: 600 14px Montserrat, 'Tiro Bangla', 'Noto Serif Bengali', sans-serif;
+  letter-spacing: .16em;
+  margin-top: 8px;
+}
+
+.revealed-date small {
+  font: 600 8.5px Montserrat, 'Hind Siliguri', sans-serif;
+  letter-spacing: .12em;
+  margin-top: 6px;
+}
+
+.scratch-wrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  z-index: 3;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.save-overlay h2 {
+  font: 700 clamp(20px, 5vw, 30px) 'Great Vibes', 'Noto Serif Bengali', serif;
+  color: #986779;
+  letter-spacing: .02em;
+  margin: 13px 0 0;
+  transform: translateY(8px);
+}
+
+.countdown {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  margin: 14px 2% 0;
+  transform: translateY(5px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.countdown div {
+  padding: 7px 2px;
+  background: #fff5f0b8;
+  border: 1px solid #d1a9a5;
+  border-radius: 7px;
+}
+
+.countdown strong {
+  display: block;
+  font: 600 21px 'Cormorant Garamond', 'Tiro Bangla', 'Noto Serif Bengali', serif;
+  color: #986779;
+}
+
+.countdown span {
+  font-size: 6px;
+  letter-spacing: .08em;
+}
+
+/* Rose Petal Reveal */
+.petal-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.petal-layer.active {
+  opacity: 1;
+}
+
+.rose-petal {
+  position: absolute;
+  top: -6%;
+  left: var(--left);
+  width: var(--size);
+  height: calc(var(--size) * 1.45);
+  border-radius: 72% 28% 68% 32% / 72% 35% 65% 28%;
+  background: radial-gradient(circle at 28% 24%, #ffdbe4 0 12%, #f4adc0 34%, #df7896 74%, #c75f80 100%);
+  box-shadow: 0 2px 5px rgba(143, 72, 95, .18), inset -2px -2px 3px rgba(171, 73, 100, .18);
+  opacity: 0;
+  transform: translate3d(0, -10vh, 0) rotate(var(--rot));
+  animation: petalFall var(--dur) var(--delay) ease-in forwards;
+}
+
+.rose-petal::after {
+  content: "";
+  position: absolute;
+  left: 45%;
+  top: 14%;
+  width: 1px;
+  height: 70%;
+  background: rgba(255, 230, 237, .6);
+  transform: rotate(10deg);
+  border-radius: 1px;
+}
+
+@keyframes petalFall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -12vh, 0) rotate(var(--rot)) scale(.72);
+  }
+  12% {
+    opacity: .95;
+  }
+  45% {
+    transform: translate3d(var(--drift), 42vh, 0) rotate(calc(var(--rot) + 140deg)) scale(1);
+  }
+  78% {
+    transform: translate3d(calc(var(--drift) * -.45), 78vh, 0) rotate(calc(var(--rot) + 300deg)) scale(.94);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift2), 118vh, 0) rotate(calc(var(--rot) + 520deg)) scale(.82);
+  }
+}
+
+/* Events */
+.event {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.penn {
+  aspect-ratio: 864/1536;
+  background-image: url('/assets/penn-vazhthu-bg.jpg');
+}
+
+.holud {
+  aspect-ratio: 910/1536;
+  background-image: url('/assets/wedding-bg.png');
+}
+
+.reception {
+  aspect-ratio: 864/1536;
+  background-image: url('/assets/reception-bg.jpg');
+}
+
+.blessings-section {
+  aspect-ratio: 864/1536;
+  background-image: url('/assets/guestbook-bg.png');
+}
+
+.wedding {
+  aspect-ratio: 910/1536;
+  background-image: url('/assets/wedding-bg.png');
+}
+
+.event-copy {
+  position: absolute;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(72%, 400px);
+  max-width: 400px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.penn-copy {
+  left: 56%;
+  top: 22%;
+  width: min(60%, 340px);
+  max-width: 340px;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.holud-copy {
+  top: 9%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(76%, 380px);
+}
+
+.wedding-copy {
+  top: 8.5%;
+}
+
+.reception-copy {
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(74%, 380px);
+}
+
+.blessings-copy {
+  top: 30.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(64%, 330px);
+}
+
+.event-tag {
+  display: inline-block;
+  font: 600 clamp(9px, 2vw, 11px) Montserrat, 'Hind Siliguri', sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #925c6b;
+  background: rgba(255, 245, 248, 0.85);
+  border: 1px solid rgba(199, 138, 154, 0.35);
+  padding: 3px 12px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  backdrop-filter: blur(2px);
+}
+
+.event h2 {
+  font: 700 clamp(20px, 5.2vw, 32px)/1.22 'Great Vibes', 'Noto Serif Bengali', serif;
+  color: #7d5a66;
+  letter-spacing: .01em;
+  margin: 0 0 10px;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  max-width: 360px;
+}
+
+.event-date {
+  font: 600 20px/1.2 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+  color: #70545d;
+  margin: 8px 0;
+}
+
+.event-time {
+  font: 600 17px Montserrat, 'Hind Siliguri', sans-serif;
+  color: #a46e7c;
+  margin: 6px 0 10px;
+}
+
+.event-place {
+  font: 500 13px/1.55 Montserrat, 'Noto Serif Bengali', 'Hind Siliguri', sans-serif;
+  color: #66545a;
+  margin: 0 auto;
+  max-width: 390px;
+}
+
+.map-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 9px 20px;
+  border: 1px solid #b58a93;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #f8dce5e8;
+  color: #785663;
+  font: 600 9px Montserrat, 'Hind Siliguri', sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* Call buttons for contacts in blessings section */
+.call-buttons-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.call-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: rgba(255, 246, 249, 0.94);
+  border: 1px solid rgba(199, 138, 154, 0.45);
+  border-radius: 20px;
+  color: #7b4d5e;
+  font: 600 clamp(9.5px, 2vw, 11px) Montserrat, 'Hind Siliguri', sans-serif;
+  letter-spacing: .04em;
+  text-decoration: none;
+  box-shadow: 0 1.5px 5px rgba(141, 93, 108, 0.12);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
+.call-btn:hover {
+  background: #ffffff;
+  border-color: #b57a8d;
+  color: #5d3443;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(141, 93, 108, 0.2);
+}
+
+.call-btn:active {
+  transform: scale(0.97);
+}
+
+.call-icon {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  color: #a46377;
+}
+
+/* Gallery */
+.gallery {
+  aspect-ratio: 864/1536;
+  background-image: url('/assets/gallery-bg.jpg');
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.gallery-content {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 19%;
+  text-align: center;
+}
+
+.gallery h2 {
+  font: 700 32px 'Great Vibes', 'Noto Serif Bengali', serif;
+  color: #946071;
+  letter-spacing: .02em;
+  margin: 0 0 14px;
+}
+
+.gallery-viewer {
+  position: relative;
+  width: 82%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-print {
+  width: 100%;
+  max-width: 360px;
+  background: #fff;
+  box-shadow: 0 10px 28px #60424a25;
+  padding: 10px 10px 24px;
+}
+
+.photo-print img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
+
+.photo-caption {
+  min-height: 66px;
+  padding: 14px 10px 0;
+  color: #765b62;
+  font: 500 16px/1.35 'Cormorant Garamond', 'Tiro Bangla', 'Noto Serif Bengali', serif;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.gallery-nav {
+  position: absolute;
+  z-index: 3;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #b58a93;
+  background: #fff7f2e8;
+  color: #805866;
+  font: 28px/25px Georgia;
+  cursor: pointer;
+}
+
+.gallery-nav.prev {
+  left: -16px;
+}
+
+.gallery-nav.next {
+  right: -16px;
+}
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 11px;
+}
+
+.gallery-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c8a3ad;
+  cursor: pointer;
+}
+
+.gallery-dots span.active {
+  background: #8d5d6c;
+}
+
+/* Dress Code */
+.dress-code {
+  aspect-ratio: 1024/1536;
+  background: #f8e9e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dress-code img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Guest */
+.guest {
+  aspect-ratio: 864/1536;
+  background-image: url('/assets/guestbook-bg.png');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guest-copy {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 38%;
+  text-align: center;
+}
+
+.guest h2 {
+  font: 700 36px 'Great Vibes', 'Noto Serif Bengali', serif;
+  color: #946071;
+  letter-spacing: .02em;
+  margin: 0 0 14px;
+}
+
+.guest p {
+  font: 500 17px/1.5 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+  color: #765d63;
+  margin: 0 auto;
+  max-width: 330px;
+}
+
+.guest-signoff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: 13px;
+  color: #765d63;
+  font: 600 16px/1.3 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+}
+
+.guest-signoff strong {
+  font-family: 'Great Vibes', 'Noto Serif Bengali', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #946071;
+}
+
+/* Thank You */
+.footer {
+  aspect-ratio: 1536/766;
+  background-image: url('/assets/footer-bg.png');
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.footer-copy {
+  position: absolute;
+  left: 10%;
+  right: 29%;
+  top: 8%;
+  text-align: center;
+  transform: translateX(-5px);
+}
+
+.footer h2 {
+  font: 700 36px 'Great Vibes', 'Noto Serif Bengali', serif;
+  color: #8e5d6d;
+  letter-spacing: .02em;
+  margin: 0 0 5px;
+}
+
+.footer p {
+  font: 500 15px/1.4 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+  color: #725c61;
+  margin: 0 0 7px;
+}
+
+.footer small {
+  display: block;
+  font: 500 8.5px Montserrat, 'Hind Siliguri', sans-serif;
+  letter-spacing: .04em;
+  color: #8b6b73;
+  margin-bottom: 5px;
+}
+
+.instagram-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border: 1px solid #b58a93;
+  border-radius: 999px;
+  background: #fff8f0e8;
+  color: #765463;
+  text-decoration: none;
+  font: 600 7.5px Montserrat;
+  letter-spacing: .03em;
+}
+
+.instagram-icon {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #8c6170;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: 13px/11px Georgia;
+}
+
+/* Music Toggle */
+.music-toggle {
+  position: fixed;
+  z-index: 100;
+  right: max(12px, calc((100vw - min(600px, 100vw)) / 2 + 12px));
+  top: max(12px, env(safe-area-inset-top));
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border: 1px solid #b58a93;
+  border-radius: 999px;
+  background: rgba(255, 248, 242, .92);
+  backdrop-filter: blur(6px);
+  color: #765463;
+  font: 600 9px Montserrat;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 18px rgba(96, 66, 74, .12);
+  cursor: pointer;
+}
+
+.music-toggle.active {
+  display: inline-flex;
+}
+
+.music-toggle span {
+  font-size: 8px;
+}
+
+/* Floating Language Toggle */
+.lang-toggle {
+  position: fixed;
+  z-index: 100;
+  left: max(12px, calc((100vw - min(600px, 100vw)) / 2 + 12px));
+  top: max(12px, env(safe-area-inset-top));
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 11px;
+  border: 1px solid #b58a93;
+  border-radius: 999px;
+  background: rgba(255, 248, 242, .92);
+  backdrop-filter: blur(6px);
+  color: #765463;
+  font: 600 9px Montserrat, 'Hind Siliguri';
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 18px rgba(96, 66, 74, .12);
+  cursor: pointer;
+}
+
+/* Admin floating trigger */
+.admin-badge-trigger {
+  position: fixed;
+  z-index: 99;
+  bottom: 12px;
+  right: max(12px, calc((100vw - min(600px, 100vw)) / 2 + 12px));
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 248, 242, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid #b58a93;
+  font-size: 9px;
+  color: #765463;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Mobile Media Queries */
+@media(max-width: 430px) {
+  .opening-monogram-wrap {
+    top: 48.5%;
+    width: 72%;
+  }
+  .opening-subtitle {
+    transform: translateY(-15px);
+    margin-bottom: 0;
+    font-size: 18px;
+  }
+  .open-btn {
+    margin-top: -5px;
+  }
+  .couple-copy {
+    top: 24.5%;
+    left: 9%;
+    right: 9%;
+  }
+  .couple .eyebrow {
+    font-size: 11.5px;
+    line-height: 1.18;
+    top: -35px;
+    letter-spacing: .015em;
+    font-weight: 700;
+  }
+  .couple .couple-person:first-of-type {
+    transform: translateY(14px);
+  }
+  .couple-person h1 {
+    font-size: 28px;
+  }
+  .couple-person p {
+    font-size: 12px;
+    line-height: 1.26;
+    max-width: 285px;
+  }
+  .couple-divider {
+    font-size: 21px;
+    margin: 5px 0;
+  }
+  .save-overlay {
+    top: 28.5%;
+    left: 14%;
+    right: 14%;
+  }
+  .revealed-date {
+    padding-top: 13%;
+  }
+  .revealed-date strong {
+    font-size: clamp(50px, 11vw, 63px);
+  }
+  .revealed-date b {
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .revealed-date small {
+    font-size: 8px;
+    margin-top: 6px;
+  }
+  .save-overlay h2 {
+    font-size: 27px;
+    margin-top: 14px;
+    transform: translateY(9px);
+  }
+  .countdown {
+    margin-top: 14px;
+    transform: translateY(5px);
+    gap: 4px;
+  }
+  .event-copy {
+    width: min(74%, 400px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .penn-copy {
+    left: 56%;
+    width: min(60%, 340px);
+    top: 21%;
+    transform: translateX(-50%);
+  }
+  .wedding-copy {
+    top: 9%;
+  }
+  .reception-copy {
+    top: 17%;
+  }
+  .event h2 {
+    font-size: 32px;
+    margin-bottom: 13px;
+  }
+  .event-date {
+    font-size: 18px;
+  }
+  .event-time {
+    font-size: 16px;
+  }
+  .event-place {
+    font-size: 11.5px;
+  }
+  .map-link {
+    font-size: 8px;
+    padding: 9px 18px;
+  }
+  .gallery-content {
+    top: 19%;
+    left: 7%;
+    right: 7%;
+  }
+  .gallery h2 {
+    font-size: 34px;
+    margin-bottom: 13px;
+  }
+  .gallery-viewer {
+    width: 82%;
+  }
+  .photo-print {
+    max-width: 350px;
+    padding: 9px 9px 21px;
+  }
+  .photo-caption {
+    min-height: 60px;
+    font-size: 15px;
+    padding-top: 12px;
+  }
+  .gallery-nav {
+    width: 32px;
+    height: 32px;
+    font-size: 27px;
+  }
+  .gallery-nav.prev {
+    left: -11px;
+  }
+  .gallery-nav.next {
+    right: -11px;
+  }
+  .guest-copy {
+    top: 39%;
+    left: 14%;
+    right: 14%;
+  }
+  .guest h2 {
+    font-size: 42px;
+  }
+  .guest p {
+    font-size: 16.5px;
+    line-height: 1.48;
+  }
+  .guest-signoff {
+    font-size: 16px;
+  }
+  .footer-copy {
+    top: 7%;
+    left: 7%;
+    right: 31%;
+    transform: translateX(-3px);
+  }
+  .footer h2 {
+    font-size: 40px;
+  }
+  .footer p {
+    font-size: 14px;
+  }
+  .footer small {
+    font-size: 7.5px;
+  }
+  .instagram-pill {
+    font-size: 7.3px;
+    padding: 6px 10px;
+  }
+  .music-toggle {
+    right: 12px;
+    top: max(10px, env(safe-area-inset-top));
+    padding: 7px 9px;
+  }
+}
+
+@media (max-width: 700px) {
+  .page {
+    background-size: 100% 100%;
+  }
+  .opening {
+    background-size: 100% 100%;
+  }
+  .opening + .page {
+    margin-top: 0;
+  }
+  .music-toggle {
+    font-size: 8px;
+  }
+  .music-toggle span {
+    font-size: 7px;
+  }
+}
+
+@media (min-width: 701px) {
+  .opening + .page {
+    margin-top: 0;
+  }
+}

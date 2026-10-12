@@ -1,0 +1,1156 @@
+import React, { useState, useEffect } from 'react';
+import {
+  X,
+  Lock,
+  Save,
+  RotateCcw,
+  Download,
+  CheckCircle,
+  FileText,
+  Users,
+  Calendar,
+  Heart,
+  MessageSquare,
+  Code,
+  MapPin,
+  Sparkles,
+  Phone,
+  Image as ImageIcon
+} from 'lucide-react';
+import { useData } from '../../context/DataContext';
+
+export default function AdminDashboard({ isOpen, onClose }) {
+  const { data, updateData, resetData } = useData();
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('wedding_admin_auth') === 'true';
+  });
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+
+  const [activeTab, setActiveTab] = useState('letter');
+  const [rawJsonText, setRawJsonText] = useState('');
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [formData, setFormData] = useState(() => data || {});
+
+  // Sync formData when data loads or modal opens
+  useEffect(() => {
+    if (data) {
+      setFormData(JSON.parse(JSON.stringify(data)));
+      setRawJsonText(JSON.stringify(data, null, 2));
+    }
+  }, [data, isOpen]);
+
+  if (!isOpen) return null;
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (username === 'abir' && password === 'Trialvo@123') {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('wedding_admin_auth', 'true');
+      setAuthError('');
+    } else {
+      setAuthError('ভুল ইউজারনেম অথবা পাসওয়ার্ড! সঠিক তথ্য দিন।');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('wedding_admin_auth');
+    setUsername('');
+    setPassword('');
+  };
+
+  // Helper getter for nested path
+  const getVal = (path, fallback = '') => {
+    if (!formData) return fallback;
+    const parts = path.split('.');
+    let cur = formData;
+    for (const p of parts) {
+      if (cur && typeof cur === 'object' && p in cur) {
+        cur = cur[p];
+      } else {
+        return fallback;
+      }
+    }
+    return cur ?? fallback;
+  };
+
+  // Helper setter for nested path
+  const setVal = (path, value) => {
+    setFormData((prev) => {
+      const copy = JSON.parse(JSON.stringify(prev || {}));
+      const parts = path.split('.');
+      let cur = copy;
+      for (let i = 0; i < parts.length - 1; i++) {
+        if (!cur[parts[i]]) cur[parts[i]] = {};
+        cur = cur[parts[i]];
+      }
+      cur[parts[parts.length - 1]] = value;
+      setRawJsonText(JSON.stringify(copy, null, 2));
+      return copy;
+    });
+  };
+
+  const handleSave = () => {
+    try {
+      let toSave;
+      if (activeTab === 'raw') {
+        toSave = JSON.parse(rawJsonText);
+        setFormData(toSave);
+      } else {
+        toSave = formData;
+        setRawJsonText(JSON.stringify(formData, null, 2));
+      }
+      updateData(toSave);
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (err) {
+      alert('JSON ফরম্যাটে সমস্যা আছে: ' + err.message);
+    }
+  };
+
+  const handleReset = () => {
+    if (window.confirm('আপনি কি পূর্বনির্ধারিত ডিফল্ট ডেটায় ফিরে যেতে চান?')) {
+      resetData();
+      alert('সফলভাবে রিসেট সম্পন্ন হয়েছে!');
+      onClose();
+    }
+  };
+
+  const handleExportJson = () => {
+    const dataStr =
+      'data:text/json;charset=utf-8,' +
+      encodeURIComponent(JSON.stringify(formData, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute('href', dataStr);
+    downloadAnchor.setAttribute('download', 'data.json');
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
+  // Reusable Dual-Language Input Field
+  const BilingualField = ({
+    title,
+    helper,
+    pathBn,
+    pathEn,
+    isTextarea = false,
+    rows = 2,
+    placeholderBn = '',
+    placeholderEn = '',
+  }) => {
+    return (
+      <div className="bg-[#241725] p-3.5 sm:p-4 rounded-2xl border border-white/5 space-y-2.5">
+        <div className="flex items-baseline justify-between">
+          <label className="text-xs sm:text-sm font-semibold text-[#fbf5b7]">
+            {title}
+          </label>
+          {helper && <span className="text-[10px] text-gray-400">{helper}</span>}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
+          {/* Bengali Field */}
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-[11px] text-[#c9a96e]">
+              <span className="px-1.5 py-0.5 rounded bg-[#c9a96e]/20 font-bold text-[10px]">
+                বাংলা (BN)
+              </span>
+            </div>
+            {isTextarea ? (
+              <textarea
+                rows={rows}
+                value={getVal(pathBn)}
+                onChange={(e) => setVal(pathBn, e.target.value)}
+                placeholder={placeholderBn}
+                className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 focus:border-[#c9a96e] text-white text-xs outline-none transition-colors leading-relaxed"
+              />
+            ) : (
+              <input
+                type="text"
+                value={getVal(pathBn)}
+                onChange={(e) => setVal(pathBn, e.target.value)}
+                placeholder={placeholderBn}
+                className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 focus:border-[#c9a96e] text-white text-xs outline-none transition-colors"
+              />
+            )}
+          </div>
+
+          {/* English Field */}
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-[11px] text-[#d8a8b5]">
+              <span className="px-1.5 py-0.5 rounded bg-[#d8a8b5]/20 font-bold text-[10px]">
+                ENGLISH (EN)
+              </span>
+            </div>
+            {isTextarea ? (
+              <textarea
+                rows={rows}
+                value={getVal(pathEn)}
+                onChange={(e) => setVal(pathEn, e.target.value)}
+                placeholder={placeholderEn}
+                className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 focus:border-[#c9a96e] text-white text-xs outline-none transition-colors leading-relaxed"
+              />
+            ) : (
+              <input
+                type="text"
+                value={getVal(pathEn)}
+                onChange={(e) => setVal(pathEn, e.target.value)}
+                placeholder={placeholderEn}
+                className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 focus:border-[#c9a96e] text-white text-xs outline-none transition-colors"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const tabs = [
+    { id: 'letter', label: 'আমন্ত্রণপত্র', icon: FileText },
+    { id: 'couple', label: 'বর ও কনে', icon: Users },
+    { id: 'event', label: 'তারিখ ও ভেন্যু', icon: Calendar },
+    { id: 'blessings', label: 'শুভেচ্ছান্তে ও পরিবার', icon: Heart },
+    { id: 'gallery', label: 'ফটো গ্যালারি', icon: ImageIcon },
+    { id: 'guest', label: 'অতিথি ও ফুটার', icon: MessageSquare },
+    { id: 'raw', label: 'Raw JSON', icon: Code },
+  ];
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-5xl max-h-[94vh] flex flex-col bg-[#1a111a] text-gray-100 rounded-3xl shadow-2xl border border-[#c9a96e]/40 overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#c9a96e]/20 bg-[#251422]">
+          <div className="flex items-center gap-2.5">
+            <Lock className="w-5 h-5 text-[#fbf5b7]" />
+            <div>
+              <h2 className="text-sm sm:text-base font-bold font-montserrat text-[#fbf5b7] leading-tight">
+                Wedding Admin Control Panel
+              </h2>
+              <span className="text-[11px] text-gray-400">
+                বাংলা ও ইংরেজি উভয়ের জন্য ফিল্ডভিত্তিক লাইভ ডাটা ম্যানেজমেন্ট
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-1.5 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Auth Barrier */}
+        {!isAuthenticated ? (
+          <div className="p-8 sm:p-12 max-w-md mx-auto w-full my-auto text-center">
+            <div className="w-14 h-14 mx-auto rounded-full bg-[#c9a96e]/20 border border-[#c9a96e] flex items-center justify-center mb-5">
+              <Lock className="w-7 h-7 text-[#fbf5b7]" />
+            </div>
+            <h3 className="text-xl font-bold font-bengali-serif text-white mb-2">
+              অ্যাডমিন লগইন
+            </h3>
+            <p className="text-xs text-gray-400 mb-6 font-montserrat">
+              Username: <code className="text-[#fbf5b7]">abir</code> | Password:{' '}
+              <code className="text-[#fbf5b7]">Trialvo@123</code>
+            </p>
+
+            {authError && (
+              <div className="mb-4 p-3 rounded-xl bg-red-900/40 border border-red-500/50 text-red-200 text-xs">
+                {authError}
+              </div>
+            )}
+
+            <form onSubmit={handleLogin} className="space-y-4 text-left">
+              <div>
+                <label className="block text-xs font-medium text-gray-300 mb-1">
+                  ইউজারনেম (Username)
+                </label>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="abir"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#2a1b2b] border border-gray-700 focus:border-[#c9a96e] text-white text-sm outline-none transition-colors"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-gray-300 mb-1">
+                  পাসওয়ার্ড (Password)
+                </label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#2a1b2b] border border-gray-700 focus:border-[#c9a96e] text-white text-sm outline-none transition-colors"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-[#c9a96e] to-[#aa771c] text-[#1f1620] hover:opacity-90 shadow-lg transition-all"
+              >
+                লগইন করুন
+              </button>
+            </form>
+          </div>
+        ) : (
+          /* Dashboard */
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* Top Toolbar */}
+            <div className="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-6 py-2.5 bg-[#251525] border-b border-gray-800 text-xs">
+              {/* Tabs */}
+              <div className="flex items-center gap-1 overflow-x-auto py-1 scrollbar-thin">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-medium transition-all whitespace-nowrap text-xs ${
+                        isActive
+                          ? 'bg-[#c9a96e] text-[#1f1620] font-bold shadow-md'
+                          : 'bg-white/5 hover:bg-white/10 text-gray-300'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleExportJson}
+                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 border border-gray-700 text-xs"
+                  title="Download data.json"
+                >
+                  <Download className="w-3.5 h-3.5 text-[#c9a96e]" />
+                  <span className="hidden sm:inline">Export JSON</span>
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 border border-gray-700 text-xs"
+                  title="Reset to default"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-rose-400" />
+                  <span className="hidden sm:inline">Reset</span>
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="px-2.5 py-1.5 rounded-lg bg-red-950/60 hover:bg-red-900 text-red-200 border border-red-800 text-xs"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+
+            {/* Notification */}
+            {saveSuccess && (
+              <div className="bg-emerald-900/90 border-b border-emerald-500/50 py-2 px-6 flex items-center gap-2 text-emerald-200 text-xs font-medium animate-fadeIn">
+                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                <span>
+                  ডেটা সফলভাবে সেভ হয়েছে! পাবলিক ওয়েবসাইটে তথ্য তৎক্ষণাৎ আপডেট
+                  হয়েছে।
+                </span>
+              </div>
+            )}
+
+            {/* Tab Contents */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+              {/* TAB 1: আমন্ত্রণপত্র (Letter) */}
+              {activeTab === 'letter' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#fbf5b7] flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-[#c9a96e]" />
+                      <span>আমন্ত্রণপত্র ও বিসমিল্লাহ টেক্সট</span>
+                    </h3>
+                    <span className="text-[11px] text-gray-400">
+                      ইনভিটেশন কার্ডের মূল চিঠি
+                    </span>
+                  </div>
+
+                  <BilingualField
+                    title="১. বিসমিল্লাহ শিরোনাম"
+                    helper="আরবি/বাংলা ক্যালিগ্রাফির নিচের হেডিং"
+                    pathBn="invitationLetter.bismillahTitle.bn"
+                    pathEn="invitationLetter.bismillahTitle.en"
+                    placeholderBn="বিসমিল্লাহির রাহমানির রাহীম"
+                    placeholderEn="Bismillahir Rahmanir Rahim"
+                  />
+
+                  <BilingualField
+                    title="২. বিসমিল্লাহ অর্থ / সাবটাইটেল"
+                    helper="In the Name of Allah..."
+                    pathBn="invitationLetter.bismillahSub.bn"
+                    pathEn="invitationLetter.bismillahSub.en"
+                    placeholderBn="পরম করুণাময় ও অসীম দয়ালু আল্লাহর নামে"
+                    placeholderEn="In the Name of Allah, the Most Gracious, the Most Merciful"
+                  />
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <BilingualField
+                      title="৩. সম্বোধন (Salutation)"
+                      helper="কার্ডের শুরুর ডাক"
+                      pathBn="invitationLetter.salutation.bn"
+                      pathEn="invitationLetter.salutation.en"
+                      placeholderBn="জনাব / জনাবা,"
+                      placeholderEn="Dear Sir / Madam,"
+                    />
+
+                    <BilingualField
+                      title="৪. সালাম (Greeting)"
+                      helper="ইসলামিক শুভেচ্ছা"
+                      pathBn="invitationLetter.greeting.bn"
+                      pathEn="invitationLetter.greeting.en"
+                      placeholderBn="আসসালামু আলাইকুম,"
+                      placeholderEn="Assalamu Alaikum,"
+                    />
+                  </div>
+
+                  <BilingualField
+                    title="৫. মূল আমন্ত্রণপত্র চিঠি (Body Text)"
+                    helper="সম্পূর্ণ বর্ণনামূলক নিমন্ত্রণ টেক্সট"
+                    pathBn="invitationLetter.body.bn"
+                    pathEn="invitationLetter.body.en"
+                    isTextarea={true}
+                    rows={6}
+                    placeholderBn="পরম করুনাময় আল্লাহ তা'য়ালার অশেষ রহমতে আসছে ২৫শে অক্টোবর..."
+                    placeholderEn="By the grace and mercy of Almighty Allah, on Sunday, 25 October 2026..."
+                  />
+                </div>
+              )}
+
+              {/* TAB 2: বর ও কনে (Couple) */}
+              {activeTab === 'couple' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#fbf5b7] flex items-center gap-2">
+                      <Users className="w-4 h-4 text-[#c9a96e]" />
+                      <span>বর ও কনের পরিচিতি ও ঠিকানা</span>
+                    </h3>
+                    <span className="text-[11px] text-gray-400">
+                      কার্ডের পরিচিতি সেকশন
+                    </span>
+                  </div>
+
+                  <BilingualField
+                    title="আমন্ত্রণ ভূমিকা বার্তা (Eyebrow Text)"
+                    helper="নামের উপরের ভূমিকা"
+                    pathBn="couple.eyebrow.bn"
+                    pathEn="couple.eyebrow.en"
+                    isTextarea={true}
+                    rows={2}
+                  />
+
+                  {/* Groom Section */}
+                  <div className="p-4 rounded-2xl bg-[#2a1727]/70 border border-[#c9a96e]/30 space-y-3">
+                    <div className="text-xs font-bold text-[#fbf5b7] uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🤵 বরের বিবরণ (Groom)</span>
+                    </div>
+
+                    <BilingualField
+                      title="বরের নাম"
+                      pathBn="couple.groom.name.bn"
+                      pathEn="couple.groom.name.en"
+                      placeholderBn="মোঃ আব্দুল রামিম (আবির)"
+                      placeholderEn="Md. Abdul Ramim (Abir)"
+                    />
+
+                    <BilingualField
+                      title="বরের পিতা ও মাতার নাম"
+                      helper="পিতা ও মাতা"
+                      pathBn="couple.groom.parents.bn"
+                      pathEn="couple.groom.parents.en"
+                      isTextarea={true}
+                      rows={2}
+                      placeholderBn="পিতা: মোঃ আমিনুর রহমান (আমিন)\nমাতা: রেহেনা বেগম"
+                      placeholderEn="Son of Md. Aminur Rahman (Amin)\n& Rahana Begum"
+                    />
+
+                    <BilingualField
+                      title="বরের স্থায়ী ঠিকানা"
+                      helper="গ্রাম, পোস্ট, জেলা"
+                      pathBn="couple.groom.address.bn"
+                      pathEn="couple.groom.address.en"
+                      isTextarea={true}
+                      rows={2}
+                      placeholderBn="গ্রাম: নয়গাঁও পূর্বপাড়া, পোষ্ট: পঞ্চসার, থানা ও জেলা: মুন্সীগঞ্জ"
+                      placeholderEn="Vill: Noyagaon Purbo Para, Post: Panchasar, Munshiganj"
+                    />
+                  </div>
+
+                  {/* Bride Section */}
+                  <div className="p-4 rounded-2xl bg-[#2a1727]/70 border border-[#d8a8b5]/30 space-y-3">
+                    <div className="text-xs font-bold text-[#fbf5b7] uppercase tracking-wider flex items-center gap-1.5">
+                      <span>👰 কনের বিবরণ (Bride)</span>
+                    </div>
+
+                    <BilingualField
+                      title="কনের নাম"
+                      pathBn="couple.bride.name.bn"
+                      pathEn="couple.bride.name.en"
+                      placeholderBn="মোসাম্মৎ সোমাইয়া আক্তার (নিশি)"
+                      placeholderEn="Mosammet Somaiya Akter (Nishi)"
+                    />
+
+                    <BilingualField
+                      title="কনের পিতা ও মাতার নাম"
+                      helper="পিতা ও মাতা"
+                      pathBn="couple.bride.parents.bn"
+                      pathEn="couple.bride.parents.en"
+                      isTextarea={true}
+                      rows={2}
+                      placeholderBn="পিতা: মোঃ মোস্তফা জামাল ভুঁইয়া\nমাতা: রোজিনা আক্তার"
+                      placeholderEn="Daughter of Md. Mostofa Zamal Bhuiyan\n& Rojina Akter"
+                    />
+
+                    <BilingualField
+                      title="কনের স্থায়ী ঠিকানা"
+                      helper="বাড়ি, রোড, এলাকা"
+                      pathBn="couple.bride.address.bn"
+                      pathEn="couple.bride.address.en"
+                      isTextarea={true}
+                      rows={2}
+                      placeholderBn="ঠিকানা: রহিমা টাওয়ার, রোড-৩, ওয়ার্ড-৬২, ছনটেক, যাত্রাবাড়ী, ঢাকা।"
+                      placeholderEn="Rahima Tower, Road-3, Ward-62, Jatrabari, Dhaka"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: তারিখ ও ভেন্যু (Event & Venue) */}
+              {activeTab === 'event' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#fbf5b7] flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-[#c9a96e]" />
+                      <span>অনুষ্ঠানের সময়সূচী ও ভেন্যু (গায়ে হলুদ ও বৌ-ভাত)</span>
+                    </h3>
+                    <span className="text-[11px] text-gray-400">
+                      ২৪ ও ২৫ অক্টোবরের অনুষ্ঠান তথ্য
+                    </span>
+                  </div>
+
+                  {/* EVENT 1: গায়ে হলুদ (24 Oct) */}
+                  <div className="p-4 rounded-2xl bg-[#2a1727]/70 border border-[#c9a96e]/30 space-y-3">
+                    <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                      <div className="text-xs font-bold text-[#fbf5b7] uppercase tracking-wider flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-[#e6b32e]" />
+                        <span>১. শুভ গায়ে হলুদ (২৪ অক্টোবর ২০২৬)</span>
+                      </div>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#c9a96e]/20 text-[#fbf5b7]">
+                        Gaye Holud Ceremony
+                      </span>
+                    </div>
+
+                    <BilingualField
+                      title="অনুষ্ঠান ট্যাগ / পর্ব"
+                      helper="হলুদ ব্যাজ"
+                      pathBn="events.holud.tag.bn"
+                      pathEn="events.holud.tag.en"
+                      placeholderBn="গায়ে হলুদ"
+                      placeholderEn="Gaye Holud"
+                    />
+
+                    <BilingualField
+                      title="অনুষ্ঠানের শিরোনাম"
+                      pathBn="events.holud.title.bn"
+                      pathEn="events.holud.title.en"
+                      placeholderBn="শুভ গায়ে হলুদ ও সঙ্গীত সন্ধ্যা"
+                      placeholderEn="Gaye Holud & Sangeet Evening"
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <BilingualField
+                        title="অনুষ্ঠানের তারিখ"
+                        pathBn="events.holud.date.bn"
+                        pathEn="events.holud.date.en"
+                        placeholderBn="শনিবার, ২৪শে অক্টোবর ২০২৬ইং (৮ই কার্তিক ১৪৩৩বাং)"
+                        placeholderEn="Saturday, 24 October 2026 (11 Kartik 1433 BE)"
+                      />
+
+                      <BilingualField
+                        title="অনুষ্ঠানের সময়"
+                        pathBn="events.holud.time.bn"
+                        pathEn="events.holud.time.en"
+                        placeholderBn="সন্ধ্যা ৭:০০ ঘটিকা"
+                        placeholderEn="7:00 PM (Evening)"
+                      />
+                    </div>
+
+                    <BilingualField
+                      title="হলুদের ভেন্যু ও ঠিকানা"
+                      pathBn="events.holud.place.bn"
+                      pathEn="events.holud.place.en"
+                      isTextarea={true}
+                      rows={2}
+                      placeholderBn="বরের নিজ বাসস্থান\nগ্রাম: নয়াগাঁও পূর্বপাড়া, পঞ্চসার, মুন্সীগঞ্জ"
+                      placeholderEn="Groom's Residence\nVill: Noyagaon Purbo Para, Panchasar, Munshiganj"
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="bg-[#241725] p-3.5 rounded-2xl border border-white/5 space-y-1">
+                        <label className="text-xs font-semibold text-[#fbf5b7] flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-[#c9a96e]" />
+                          <span>হলুদ ভেন্যু Google Maps URL</span>
+                        </label>
+                        <input
+                          type="url"
+                          value={getVal('events.holud.mapUrl')}
+                          onChange={(e) =>
+                            setVal('events.holud.mapUrl', e.target.value)
+                          }
+                          className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 focus:border-[#c9a96e] text-white text-xs outline-none"
+                        />
+                      </div>
+
+                      <BilingualField
+                        title="ম্যাপ বাটনের টেক্সট"
+                        pathBn="events.holud.mapText.bn"
+                        pathEn="events.holud.mapText.en"
+                        placeholderBn="গুগল ম্যাপে লোকেশন দেখুন"
+                        placeholderEn="Open Google Maps"
+                      />
+                    </div>
+                  </div>
+
+                  {/* EVENT 2: বৌ-ভাত ও প্রীতিভোজ (25 Oct) */}
+                  <div className="p-4 rounded-2xl bg-[#2a1727]/70 border border-[#c9a96e]/30 space-y-3">
+                    <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                      <div className="text-xs font-bold text-[#fbf5b7] uppercase tracking-wider flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-[#c9a96e]" />
+                        <span>২. বিবাহোত্তর বৌ-ভাত (২৫ অক্টোবর ২০২৬)</span>
+                      </div>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#c9a96e]/20 text-[#fbf5b7]">
+                        Wedding Reception
+                      </span>
+                    </div>
+
+                    <BilingualField
+                      title="অনুষ্ঠান ট্যাগ / পর্ব"
+                      helper="বৌ-ভাত ব্যাজ"
+                      pathBn="events.reception.tag.bn"
+                      pathEn="events.reception.tag.en"
+                      placeholderBn="বৌ-ভাত ও প্রীতিভোজ"
+                      placeholderEn="Wedding Reception"
+                    />
+
+                    <BilingualField
+                      title="অনুষ্ঠানের শিরোনাম"
+                      pathBn="events.reception.title.bn"
+                      pathEn="events.reception.title.en"
+                      placeholderBn="শুভ বৌ-ভাত ও প্রীতিভোজ"
+                      placeholderEn="Wedding Reception & Grand Feast"
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <BilingualField
+                        title="অনুষ্ঠানের তারিখ"
+                        pathBn="events.reception.date.bn"
+                        pathEn="events.reception.date.en"
+                        placeholderBn="রবিবার, ২৫শে অক্টোবর ২০২৬ইং"
+                        placeholderEn="Sunday, 25 October 2026"
+                      />
+
+                      <BilingualField
+                        title="বাংলা সন ও তারিখ"
+                        pathBn="saveDate.bengaliEra.bn"
+                        pathEn="saveDate.bengaliEra.en"
+                        placeholderBn="৯ই কার্তিক ১৪৩৩ বাং"
+                        placeholderEn="12 Kartik 1433 Bengali Era"
+                      />
+                    </div>
+
+                    <BilingualField
+                      title="অনুষ্ঠানের সময় ও পর্ব"
+                      pathBn="events.reception.time.bn"
+                      pathEn="events.reception.time.en"
+                      placeholderBn="দুপুর ১:৩১ মিনিট (প্রীতিভোজ)"
+                      placeholderEn="1:31 PM (Grand Feast)"
+                    />
+
+                    <BilingualField
+                      title="ভেন্যুর নাম ও পূর্ণ ঠিকানা"
+                      pathBn="events.reception.place.bn"
+                      pathEn="events.reception.place.en"
+                      isTextarea={true}
+                      rows={3}
+                      placeholderBn="ফ্রেন্ডস কিচেন এন্ড পার্টি সেন্টার\n১২০ কাজী প্লাজা, খালইষ্ট, জুবলী রোড, মুন্সীগঞ্জ"
+                      placeholderEn="Friends Kitchen & Party Palace\n120 Kazi Plaza, Khalist, Jubilee Road, Munshiganj"
+                    />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="bg-[#241725] p-3.5 rounded-2xl border border-white/5 space-y-1">
+                        <label className="text-xs font-semibold text-[#fbf5b7] flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-[#c9a96e]" />
+                          <span>বৌ-ভাত Google Maps URL</span>
+                        </label>
+                        <input
+                          type="url"
+                          value={getVal('events.reception.mapUrl')}
+                          onChange={(e) =>
+                            setVal('events.reception.mapUrl', e.target.value)
+                          }
+                          className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 focus:border-[#c9a96e] text-white text-xs outline-none"
+                        />
+                      </div>
+
+                      <div className="bg-[#241725] p-3.5 rounded-2xl border border-white/5 space-y-1">
+                        <label className="text-xs font-semibold text-[#fbf5b7] flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-[#c9a96e]" />
+                          <span>কাউন্টডাউন টার্গেট ডেট (ISO)</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={getVal('saveDate.targetDate')}
+                          onChange={(e) =>
+                            setVal('saveDate.targetDate', e.target.value)
+                          }
+                          placeholder="2026-10-25T13:30:00"
+                          className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 focus:border-[#c9a96e] text-white text-xs outline-none"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 4: শুভেচ্ছান্তে ও পরিবার (Blessings) */}
+              {activeTab === 'blessings' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#fbf5b7] flex items-center gap-2">
+                      <Heart className="w-4 h-4 text-[#c9a96e]" />
+                      <span>শুভেচ্ছান্তে, অভ্যর্থনা ও হৈ চৈ পরিবারবর্গ</span>
+                    </h3>
+                    <span className="text-[11px] text-gray-400">
+                      কার্ডের শুভাকাঙ্ক্ষী তালিকা
+                    </span>
+                  </div>
+
+                  {/* শুভেচ্ছান্তে */}
+                  <div className="space-y-2">
+                    <BilingualField
+                      title="১. শুভেচ্ছান্তে শিরোনাম"
+                      pathBn="blessings.wishes.title.bn"
+                      pathEn="blessings.wishes.title.en"
+                      placeholderBn="-: শুভেচ্ছান্তে :-"
+                      placeholderEn="Best Wishes From"
+                    />
+                    <BilingualField
+                      title="শুভেচ্ছান্তে নামসমূহ"
+                      helper="প্রতি লাইনে বা কমা দিয়ে নাম লিখুন"
+                      pathBn="blessings.wishes.names.bn"
+                      pathEn="blessings.wishes.names.en"
+                      isTextarea={true}
+                      rows={3}
+                      placeholderBn="মোঃ আমিনুর রহমান (আমিন)\nরেহেনা বেগম\nনূরজাহান বেগম"
+                      placeholderEn="Md. Aminur Rahman (Amin)\nRahana Begum\nNurjahan Begum"
+                    />
+                  </div>
+
+                  {/* অভ্যর্থনায় */}
+                  <div className="space-y-2">
+                    <BilingualField
+                      title="২. অভ্যর্থনায় শিরোনাম"
+                      pathBn="blessings.reception.title.bn"
+                      pathEn="blessings.reception.title.en"
+                      placeholderBn="-: অভ্যর্থনায় :-"
+                      placeholderEn="Cordially Welcomed By"
+                    />
+                    <BilingualField
+                      title="অভ্যর্থনায় নামসমূহ"
+                      pathBn="blessings.reception.names.bn"
+                      pathEn="blessings.reception.names.en"
+                      isTextarea={true}
+                      rows={2}
+                      placeholderBn="মাহামুদ হোসেন, নাছির, আক্তার, রাসেল, শুভ, লিখন ও হাসান"
+                      placeholderEn="Mahmud Hossain, Nasir, Akter, Rasel, Shuvo, Likhon & Hasan"
+                    />
+                  </div>
+
+                  {/* হৈ চৈ */}
+                  <div className="space-y-2">
+                    <BilingualField
+                      title="৩. হৈ চৈ শিরোনাম"
+                      pathBn="blessings.youngsters.title.bn"
+                      pathEn="blessings.youngsters.title.en"
+                      placeholderBn="হৈ চৈ ঃ"
+                      placeholderEn="The Little Stars"
+                    />
+                    <BilingualField
+                      title="হৈ চৈ কচিকাঁচাদের নাম"
+                      pathBn="blessings.youngsters.names.bn"
+                      pathEn="blessings.youngsters.names.en"
+                      isTextarea={true}
+                      rows={3}
+                      placeholderBn="মায়ান, মুয়াজ, নুহাশ, রিয়ান, রাফা, রিমি, অর্নি..."
+                      placeholderEn="Mayan, Muaz, Nuhash, Riyan, Rafa, Rimi, Oni..."
+                    />
+                  </div>
+
+                  {/* ফোন নম্বর */}
+                  <div className="bg-[#241725] p-3.5 rounded-2xl border border-white/5 space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-semibold text-[#fbf5b7] flex items-center gap-1.5">
+                        <Phone className="w-3.5 h-3.5 text-[#c9a96e]" />
+                        <span>যোগাযোগের ফোন নম্বর (Contact Numbers)</span>
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const current = Array.isArray(formData?.blessings?.contacts)
+                            ? [...formData.blessings.contacts, '']
+                            : [''];
+                          setVal('blessings.contacts', current);
+                        }}
+                        className="text-[11px] px-2 py-0.5 rounded-lg bg-[#c9a96e]/20 text-[#fbf5b7] hover:bg-[#c9a96e]/30 transition-colors"
+                      >
+                        + নম্বর যোগ করুন
+                      </button>
+                    </div>
+
+                    <div className="space-y-2">
+                      {(Array.isArray(formData?.blessings?.contacts)
+                        ? formData.blessings.contacts
+                        : []
+                      ).map((contact, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <span className="text-[10px] text-gray-400 w-14 shrink-0">
+                            নম্বর {idx + 1}:
+                          </span>
+                          <input
+                            type="text"
+                            value={contact}
+                            onChange={(e) => {
+                              const current = [...(formData?.blessings?.contacts || [])];
+                              current[idx] = e.target.value;
+                              setVal('blessings.contacts', current);
+                            }}
+                            placeholder="01715-106248"
+                            className="flex-1 px-3 py-1.5 rounded-xl bg-[#140e15] border border-gray-700 text-white text-xs outline-none focus:border-[#c9a96e]"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const current = [...(formData?.blessings?.contacts || [])];
+                              current.splice(idx, 1);
+                              setVal('blessings.contacts', current);
+                            }}
+                            className="text-xs text-red-400 hover:text-red-300 px-2 py-1"
+                            title="মুছে ফেলুন"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 5: ফটো গ্যালারি (Gallery) */}
+              {activeTab === 'gallery' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#fbf5b7] flex items-center gap-2">
+                      <ImageIcon className="w-4 h-4 text-[#c9a96e]" />
+                      <span>ফটো গ্যালারি সেটিংস ও ছবিসমূহ</span>
+                    </h3>
+                    <span className="text-[11px] text-gray-400">
+                      গ্যালারি ভিজিবিলিটি ও ফটো URL কন্ট্রোল
+                    </span>
+                  </div>
+
+                  {/* গ্যালারি ভিজিবিলিটি চেকবক্স */}
+                  <div className="p-4 rounded-2xl bg-[#241725] border border-white/10 space-y-2">
+                    <label className="flex items-start sm:items-center gap-3 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(formData?.gallery?.show)}
+                        onChange={(e) => setVal('gallery.show', e.target.checked)}
+                        className="w-5 h-5 rounded mt-0.5 sm:mt-0 accent-[#c9a96e] cursor-pointer"
+                      />
+                      <div>
+                        <span className="text-sm font-bold text-[#fbf5b7] block">
+                          ওয়েবসাইটে ফটো গ্যালারি সেকশন প্রদর্শন করুন (Show Photo Gallery)
+                        </span>
+                        <span className="text-xs text-gray-300">
+                          {formData?.gallery?.show ? (
+                            <span className="text-emerald-400 font-semibold">
+                              ● বর্তমানে গ্যালারি সেকশনটি ওয়েবসাইটে দৃশ্যমান (Active)
+                            </span>
+                          ) : (
+                            <span className="text-amber-300 font-semibold">
+                              ○ বর্তমানে গ্যালারি সেকশনটি লুকায়িত রয়েছে (Hidden by default)
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+
+                  {/* গ্যালারি টাইটেল */}
+                  <BilingualField
+                    title="গ্যালারির শিরোনাম"
+                    helper="হেডিং টেক্সট"
+                    pathBn="gallery.title.bn"
+                    pathEn="gallery.title.en"
+                    placeholderBn="ফটো গ্যালারি"
+                    placeholderEn="Photo Gallery"
+                  />
+
+                  {/* মাল্টিপল ফটো URL লিস্ট */}
+                  <div className="bg-[#241725] p-3.5 sm:p-4 rounded-2xl border border-white/5 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <label className="text-xs sm:text-sm font-semibold text-[#fbf5b7] block">
+                          ছবির ইউআরএল / লিংকসমূহ (Image URLs)
+                        </label>
+                        <span className="text-[10px] text-gray-400">
+                          অনলাইন ইমেজ URL (https://...) বা লোকাল পাথ (assets/couple-1.jpg)
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const current = Array.isArray(formData?.gallery?.photos)
+                            ? [...formData.gallery.photos, '']
+                            : [''];
+                          setVal('gallery.photos', current);
+                        }}
+                        className="text-[11px] px-2.5 py-1 rounded-xl bg-[#c9a96e]/20 text-[#fbf5b7] hover:bg-[#c9a96e]/30 transition-colors flex items-center gap-1 font-semibold"
+                      >
+                        + নতুন ফটো লিংক যোগ করুন
+                      </button>
+                    </div>
+
+                    <div className="space-y-2.5">
+                      {(Array.isArray(formData?.gallery?.photos)
+                        ? formData.gallery.photos
+                        : []
+                      ).map((photoUrl, idx) => {
+                        const cleanUrl = String(photoUrl || '').trim();
+                        const previewSrc =
+                          cleanUrl.startsWith('http') || cleanUrl.startsWith('/')
+                            ? cleanUrl
+                            : cleanUrl
+                            ? `/${cleanUrl}`
+                            : '';
+
+                        return (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-2.5 p-2 rounded-xl bg-[#140e15] border border-gray-800"
+                          >
+                            <span className="text-[11px] text-gray-400 w-8 shrink-0 font-mono">
+                              #{idx + 1}
+                            </span>
+
+                            {/* Thumbnail preview */}
+                            <div className="w-10 h-10 rounded-lg bg-black/40 border border-gray-700 overflow-hidden shrink-0 flex items-center justify-center">
+                              {previewSrc ? (
+                                <img
+                                  src={previewSrc}
+                                  alt={`Preview ${idx + 1}`}
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                  }}
+                                />
+                              ) : (
+                                <ImageIcon className="w-4 h-4 text-gray-600" />
+                              )}
+                            </div>
+
+                            <input
+                              type="text"
+                              value={photoUrl}
+                              onChange={(e) => {
+                                const current = [...(formData?.gallery?.photos || [])];
+                                current[idx] = e.target.value;
+                                setVal('gallery.photos', current);
+                              }}
+                              placeholder="https://example.com/photo.jpg অথবা assets/couple-1.jpg"
+                              className="flex-1 px-3 py-1.5 rounded-lg bg-[#1f1520] border border-gray-700 text-white text-xs outline-none focus:border-[#c9a96e]"
+                            />
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const current = [...(formData?.gallery?.photos || [])];
+                                current.splice(idx, 1);
+                                setVal('gallery.photos', current);
+                              }}
+                              className="text-xs text-red-400 hover:text-red-300 p-1.5 rounded-lg hover:bg-red-950/40"
+                              title="ছবি মুছে ফেলুন"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        );
+                      })}
+
+                      {(!formData?.gallery?.photos || formData.gallery.photos.length === 0) && (
+                        <div className="text-center py-4 text-xs text-gray-500">
+                          কোনো ছবির লিংক যুক্ত করা নেই। "+ নতুন ফটো লিংক যোগ করুন" বাটনে ক্লিক করে ছবির URL যুক্ত করুন।
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 6: অতিথি ও ফুটার (Guest & Footer) */}
+              {activeTab === 'guest' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#fbf5b7] flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4 text-[#c9a96e]" />
+                      <span>ওপেনিং, অতিথি বার্তা ও ফুটার</span>
+                    </h3>
+                  </div>
+
+                  <BilingualField
+                    title="হোমপেজ ওপেনিং সাবটাইটেল"
+                    pathBn="opening.subtitle.bn"
+                    pathEn="opening.subtitle.en"
+                    placeholderBn="শুভ বিবাহোত্তর বৌ-ভাত অনুষ্ঠান"
+                    placeholderEn="Wedding Celebration & Reception"
+                  />
+
+                  <BilingualField
+                    title="দাওয়াতনামা বাটন টেক্সট"
+                    pathBn="opening.openButton.bn"
+                    pathEn="opening.openButton.en"
+                    placeholderBn="দাওয়াতনামা খুলুন"
+                    placeholderEn="Open Invitation"
+                  />
+
+                  <BilingualField
+                    title="প্রিয় অতিথি সেকশনের বার্তা"
+                    pathBn="guest.message.bn"
+                    pathEn="guest.message.en"
+                    isTextarea={true}
+                    rows={3}
+                  />
+
+                  <BilingualField
+                    title="ধন্যবাদ ফুটার বার্তা"
+                    pathBn="footer.message.bn"
+                    pathEn="footer.message.en"
+                    isTextarea={true}
+                    rows={3}
+                  />
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-[#241725] p-3.5 rounded-2xl border border-white/5 space-y-1">
+                      <label className="text-xs font-semibold text-[#fbf5b7]">
+                        রেফারেন্স টেক্সট (Footer Reference)
+                      </label>
+                      <input
+                        type="text"
+                        value={getVal('footer.reference')}
+                        onChange={(e) => setVal('footer.reference', e.target.value)}
+                        placeholder="trialvo.com"
+                        className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 text-white text-xs outline-none"
+                      />
+                    </div>
+                    <div className="bg-[#241725] p-3.5 rounded-2xl border border-white/5 space-y-1">
+                      <label className="text-xs font-semibold text-[#fbf5b7]">
+                        রেফারেন্স লিংক (URL)
+                      </label>
+                      <input
+                        type="url"
+                        value={getVal('footer.referenceUrl')}
+                        onChange={(e) => setVal('footer.referenceUrl', e.target.value)}
+                        placeholder="https://trialvo.com"
+                        className="w-full px-3 py-2 rounded-xl bg-[#140e15] border border-gray-700 text-white text-xs outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 6: Raw JSON Editor */}
+              {activeTab === 'raw' && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs text-gray-400">
+                    <span>
+                      সম্পূর্ণ <code className="text-[#fbf5b7]">data.json</code>{' '}
+                      সরাসরি এডিট করুন (বাংলা ও ইংরেজি উভয় ডাটা একসাথে):
+                    </span>
+                    <button
+                      onClick={() => {
+                        try {
+                          const formatted = JSON.stringify(
+                            JSON.parse(rawJsonText),
+                            null,
+                            2
+                          );
+                          setRawJsonText(formatted);
+                          setFormData(JSON.parse(formatted));
+                        } catch (e) {
+                          alert('Invalid JSON: ' + e.message);
+                        }
+                      }}
+                      className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-[#fbf5b7] font-medium"
+                    >
+                      Format JSON
+                    </button>
+                  </div>
+                  <textarea
+                    value={rawJsonText}
+                    onChange={(e) => {
+                      setRawJsonText(e.target.value);
+                      try {
+                        const parsed = JSON.parse(e.target.value);
+                        setFormData(parsed);
+                      } catch (err) {
+                        // ignore parsing while typing
+                      }
+                    }}
+                    rows={19}
+                    className="w-full font-mono text-xs p-4 rounded-xl bg-[#120a13] border border-gray-700 text-emerald-400 focus:border-[#c9a96e] outline-none leading-relaxed"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Sticky Action Bar */}
+            <div className="p-3.5 sm:p-4 border-t border-gray-800 bg-[#251422] flex items-center justify-between gap-3">
+              <span className="text-[11px] text-gray-400 hidden sm:inline">
+                যেকোনো ফিল্ডে পরিবর্তন করে &ldquo;সেভ করুন&rdquo; চাপলে মূল ওয়েবসাইটে সাথে সাথে আপডেট কার্যকর হবে।
+              </span>
+              <div className="flex items-center gap-2.5 ml-auto">
+                <button
+                  onClick={onClose}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-gray-300"
+                >
+                  বন্ধ করুন
+                </button>
+                <button
+                  onClick={handleSave}
+                  className="flex items-center gap-1.5 px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-[#c9a96e] to-[#aa771c] text-[#1f1620] hover:opacity-90 shadow-lg transition-transform active:scale-95"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>সেভ করুন (Save Changes)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

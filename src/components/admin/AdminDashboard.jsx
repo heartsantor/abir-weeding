@@ -539,8 +539,8 @@ export default function AdminDashboard({ isOpen, onClose }) {
                     pathEn="couple.groom.address.en"
                     isTextarea={true}
                     rows={2}
-                    placeholderBn="গ্রাম: নয়গাঁও পূর্বপাড়া, পোষ্ট: পঞ্চসার, থানা ও জেলা: মুন্সীগঞ্জ"
-                    placeholderEn="Vill: Noyagaon Purbo Para, Post: Panchasar, Munshiganj"
+                    placeholderBn="৭৯ নয়াগাঁও পূর্বপাড়া, পঞ্চসার, মুন্সীগঞ্জ-১৫০০"
+                    placeholderEn="79 Noyagaon Purbo Para, Panchasar, Munshiganj-1500"
                   />
                 </div>
 

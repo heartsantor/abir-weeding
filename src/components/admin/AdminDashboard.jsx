@@ -883,8 +883,8 @@ function AdminDashboardInner({ isOpen, onClose }) {
                     pathEn="blessings.youngsters.names.en"
                     isTextarea={true}
                     rows={3}
-                    placeholderBn="মায়ান, মুয়াজ, নুহাশ, রিয়ান, রাফা, রিমি, অর্নি..."
-                    placeholderEn="Mayan, Muaz, Nuhash, Riyan, Rafa, Rimi, Oni..."
+                    placeholderBn="মায়ান, নুজাইম, মুয়াজ, নুহাশ, রিয়ান,\nরাফা, রিমি, অর্নি, আবিবা, নিরা,\nনুসরাত, নাবিলা, তন্ময়, নাবিল ও মাহবুব"
+                    placeholderEn="Mayan, Nuzaim, Muaz, Nuhash, Riyan,\nRafa, Rimi, Orni, Abiba, Nira,\nNusrat, Nabila, Tonmoy, Nabil & Mahbub"
                   />
                 </div>
 

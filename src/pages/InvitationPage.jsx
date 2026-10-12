@@ -797,7 +797,7 @@ export default function InvitationPage() {
               {t(data.guest?.message)}
             </p>
             <div className="guest-signoff">
-              <span>– {t(data.guest?.signoff?.name1)}</span>
+              <span>{t(data.guest?.signoff?.name1)}</span>
               <strong>&amp;</strong>
               <span>{t(data.guest?.signoff?.name2)}</span>
             </div>

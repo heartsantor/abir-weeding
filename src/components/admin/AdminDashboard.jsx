@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   X,
   Lock,
+  User,
   Save,
   RotateCcw,
   Download,
@@ -218,6 +219,102 @@ export default function AdminDashboard({ isOpen, onClose }) {
     { id: 'raw', label: 'Raw JSON', icon: Code },
   ];
 
+  if (!isAuthenticated) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md overflow-y-auto animate-fadeIn">
+        <div className="relative w-full max-w-sm sm:max-w-md bg-gradient-to-b from-[#fffafd] to-[#fbf2f6] text-[#4a333d] rounded-3xl shadow-[0_25px_60px_-15px_rgba(115,55,75,0.35)] border border-[#e8c8d2] overflow-hidden p-6 sm:p-8 text-center">
+          {/* Subtle decorative gold floral corners or glow */}
+          <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-gradient-to-br from-[#ffdbe5]/40 to-transparent blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-gradient-to-tl from-[#ffdbe5]/40 to-transparent blur-2xl pointer-events-none" />
+
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#f4dfe5]/80 hover:bg-[#ebd0d8] text-[#7d5060] flex items-center justify-center transition-colors shadow-sm cursor-pointer"
+            title="বন্ধ করুন"
+          >
+            <X className="w-4 h-4" />
+          </button>
+
+          {/* Monogram / Royal Emblem */}
+          <div className="w-20 h-20 mx-auto mb-3 relative flex items-center justify-center">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#f6d7e0] to-[#fdf4f7] blur-sm opacity-90" />
+            <img
+              src="/assets/monogram-an-transparent.png"
+              alt="Royal Monogram"
+              className="w-16 h-16 object-contain relative z-10 drop-shadow-sm transform hover:scale-105 transition-transform"
+            />
+          </div>
+
+          {/* Title & Tagline */}
+          <h2 className="text-xl sm:text-2xl font-bold text-[#6d4453] font-bengali-serif mb-1 tracking-tight">
+            অ্যাডমিন প্রবেশদ্বার
+          </h2>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#9b6877] mb-2 font-montserrat">
+            Wedding Invitation Control
+          </p>
+          <div className="w-20 h-[1.5px] mx-auto bg-gradient-to-r from-transparent via-[#c78a9a] to-transparent mb-5" />
+
+          {/* Error message if any */}
+          {authError && (
+            <div className="mb-4 p-2.5 rounded-xl bg-[#fae8ec] border border-[#e8b5c1] text-[#913b4e] text-xs font-medium text-center">
+              {authError}
+            </div>
+          )}
+
+          {/* Login Form */}
+          <form onSubmit={handleLogin} className="space-y-4 text-left">
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-[#6d4453]">
+                ইউজারনেম (Username)
+              </label>
+              <div className="relative">
+                <User className="w-4 h-4 text-[#a77382] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="ইউজারনেম লিখুন"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/95 border border-[#e0c2cb] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4c353e] placeholder-[#b096a0] text-xs outline-none transition-all shadow-sm"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-xs font-semibold text-[#6d4453]">
+                পাসওয়ার্ড (Password)
+              </label>
+              <div className="relative">
+                <Lock className="w-4 h-4 text-[#a77382] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/95 border border-[#e0c2cb] focus:border-[#b57a8d] focus:ring-2 focus:ring-[#c78a9a]/20 text-[#4c353e] placeholder-[#b096a0] text-xs outline-none transition-all shadow-sm"
+                  required
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full mt-2 py-2.5 px-4 rounded-xl font-semibold text-xs tracking-wider uppercase text-white bg-gradient-to-r from-[#ba7b8e] via-[#a36577] to-[#8d4f61] hover:from-[#c5879a] hover:to-[#9a596c] shadow-[0_4px_14px_rgba(163,101,119,0.32)] hover:shadow-[0_6px_20px_rgba(163,101,119,0.45)] transform hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>লগইন করুন</span>
+              <span>✦</span>
+            </button>
+          </form>
+
+          <p className="text-[10px] text-[#9c7885] mt-5">
+            অনুমোদিত অ্যাডমিন ব্যতীত প্রবেশ নিষেধ
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
       <div className="relative w-full max-w-5xl max-h-[94vh] flex flex-col bg-[#1a111a] text-gray-100 rounded-3xl shadow-2xl border border-[#c9a96e]/40 overflow-hidden">
@@ -236,69 +333,11 @@ export default function AdminDashboard({ isOpen, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition-colors"
+            className="p-1.5 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-
-        {/* Auth Barrier */}
-        {!isAuthenticated ? (
-          <div className="p-8 sm:p-12 max-w-md mx-auto w-full my-auto text-center">
-            <div className="w-14 h-14 mx-auto rounded-full bg-[#c9a96e]/20 border border-[#c9a96e] flex items-center justify-center mb-5">
-              <Lock className="w-7 h-7 text-[#fbf5b7]" />
-            </div>
-            <h3 className="text-xl font-bold font-bengali-serif text-white mb-2">
-              অ্যাডমিন লগইন
-            </h3>
-            <p className="text-xs text-gray-400 mb-6">
-              দয়া করে আপনার অ্যাডমিন ইউজারনেম ও পাসওয়ার্ড দিন।
-            </p>
-
-            {authError && (
-              <div className="mb-4 p-3 rounded-xl bg-red-900/40 border border-red-500/50 text-red-200 text-xs">
-                {authError}
-              </div>
-            )}
-
-            <form onSubmit={handleLogin} className="space-y-4 text-left">
-              <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
-                  ইউজারনেম (Username)
-                </label>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="ইউজারনেম লিখুন"
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#2a1b2b] border border-gray-700 focus:border-[#c9a96e] text-white text-sm outline-none transition-colors"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1">
-                  পাসওয়ার্ড (Password)
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••••••"
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#2a1b2b] border border-gray-700 focus:border-[#c9a96e] text-white text-sm outline-none transition-colors"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-[#c9a96e] to-[#aa771c] text-[#1f1620] hover:opacity-90 shadow-lg transition-all"
-              >
-                লগইন করুন
-              </button>
-            </form>
-          </div>
-        ) : (
           /* Dashboard */
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Top Toolbar */}
@@ -1148,8 +1187,7 @@ export default function AdminDashboard({ isOpen, onClose }) {
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }

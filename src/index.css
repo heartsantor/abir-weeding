@@ -464,13 +464,17 @@ body.locked {
   width: min(86%, 350px);
   max-width: 350px;
   text-align: center;
-  background: rgba(255, 252, 248, 0.93);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(214, 182, 193, 0.75);
-  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 245, 248, 0.42) 100%);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 26px;
   padding: 22px 18px 20px;
-  box-shadow: 0 14px 40px rgba(95, 42, 58, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 16px 40px -10px rgba(110, 45, 65, 0.16),
+    0 4px 12px rgba(0, 0, 0, 0.03),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 2px rgba(220, 180, 195, 0.3);
   box-sizing: border-box;
 }
 
@@ -1009,7 +1013,7 @@ body.locked {
     width: min(88%, 330px);
     max-width: 330px;
     padding: 18px 14px 16px;
-    border-radius: 20px;
+    border-radius: 22px;
     text-align: center;
   }
   .wedding-copy {

@@ -654,8 +654,8 @@ export default function AdminDashboard({ isOpen, onClose }) {
                     pathEn="events.holud.place.en"
                     isTextarea={true}
                     rows={2}
-                    placeholderBn="বরের নিজ বাসস্থান\nগ্রাম: নয়াগাঁও পূর্বপাড়া, পঞ্চসার, মুন্সীগঞ্জ"
-                    placeholderEn="Groom's Residence\nVill: Noyagaon Purbo Para, Panchasar, Munshiganj"
+                    placeholderBn="ফ্রেন্ডস কিচেন এন্ড পার্টি সেন্টার\n১২০ কাজী প্লাজা, খালইষ্ট, জুবলী রোড, মুন্সীগঞ্জ"
+                    placeholderEn="Friends Kitchen & Party Center\n120 Kazi Plaza, Khalist, Jubilee Road, Munshiganj"
                   />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

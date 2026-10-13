@@ -30,31 +30,35 @@ export default function WhenWhereSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="relative w-full"
+        className="relative w-full [container-type:inline-size]"
       >
         <img
           src="/assets/when-where-frame.png"
           alt="When & Where frame"
-          className="w-full h-auto"
+          className="w-full h-auto select-none pointer-events-none"
           draggable={false}
         />
-        <div className="absolute inset-x-0 bottom-[6%] top-[56%] flex flex-col items-center justify-start pt-[0.8cm] text-center px-8">
-          <h2 className="font-display text-3xl sm:text-5xl text-primary font-bold">
-            {heading}
-          </h2>
-          <p className="font-body mt-2 text-[0.68rem] sm:text-xs tracking-[0.16em] uppercase text-primary/80 font-medium">
-            {subtitle}
-          </p>
-          <div className="mt-3 font-body text-xs sm:text-base leading-relaxed text-primary font-medium space-y-0.5">
-            <p className="font-bold text-sm sm:text-lg">{venue}</p>
-            <p>{dateStr}</p>
-            <p className="text-primary/90">{ceremonyTime}</p>
+        <div className="absolute inset-x-[10%] bottom-[6%] top-[58%] flex flex-col items-center justify-between text-center px-3 sm:px-6 pb-1 sm:pb-3">
+          <div>
+            <h2 className="font-display text-[clamp(1.35rem,6.2cqw,2.4rem)] text-primary font-bold leading-tight">
+              {heading}
+            </h2>
+            <p className="font-body mt-1 text-[clamp(0.6rem,2.3cqw,0.8rem)] tracking-[0.16em] uppercase text-primary/80 font-medium">
+              {subtitle}
+            </p>
           </div>
+
+          <div className="font-body text-[clamp(0.72rem,3.2cqw,1.05rem)] leading-snug text-primary font-medium space-y-0.5">
+            <p className="font-bold text-[clamp(0.82rem,3.8cqw,1.25rem)] text-primary">{venue}</p>
+            <p className="text-primary/90">{dateStr}</p>
+            <p className="text-primary/90 font-semibold">{ceremonyTime}</p>
+          </div>
+
           <a
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-[0.8cm] sm:mt-[1cm] inline-block rounded-full border border-primary/30 bg-background/80 px-6 py-2 font-body text-xs sm:text-sm text-primary shadow-xs transition-colors hover:bg-background font-semibold"
+            className="inline-block rounded-full border border-primary/35 bg-background/90 px-5 py-1.5 font-body text-[clamp(0.65rem,2.7cqw,0.85rem)] text-primary shadow-xs transition-transform hover:scale-105 active:scale-95 font-semibold"
           >
             {buttonText}
           </a>

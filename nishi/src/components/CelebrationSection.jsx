@@ -35,7 +35,7 @@ export default function CelebrationSection() {
     t(data?.dressCodeSection?.title) || (lang === "bn" ? "পোশাক রীতি" : "Dress Code");
 
   return (
-    <section className="py-12 md:py-20 px-6">
+    <section className="py-12 md:py-20 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-2xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -75,7 +75,7 @@ export default function CelebrationSection() {
                 src="/assets/key-tassel.png"
                 alt=""
                 draggable={false}
-                className="pointer-events-none select-none absolute -bottom-6 -right-4 md:-bottom-8 md:-right-8 w-28 md:w-40 h-auto z-20 drop-shadow-sm"
+                className="pointer-events-none select-none absolute -bottom-5 -right-2 sm:-bottom-6 sm:-right-4 md:-bottom-8 md:-right-8 w-24 sm:w-28 md:w-40 h-auto z-20 drop-shadow-sm"
               />
               <p className="font-body text-xs sm:text-sm tracking-[0.22em] uppercase text-foreground/75 mb-3 font-semibold">
                 {badge}

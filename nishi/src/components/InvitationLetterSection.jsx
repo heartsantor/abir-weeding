@@ -60,7 +60,7 @@ export default function InvitationLetterSection() {
         </p>
 
         {/* Letter Body */}
-        <p className="font-body text-sm sm:text-base leading-relaxed text-foreground/85 whitespace-pre-line text-justify sm:text-center px-1 sm:px-4">
+        <p className="font-body text-sm sm:text-base leading-relaxed text-foreground/90 whitespace-pre-line text-center px-2 sm:px-6">
           {body}
         </p>
 

@@ -65,8 +65,14 @@ function InvitationApp() {
       {/* Wax-Seal Envelope Curtain Entrance */}
       {curtainActive && (
         <CurtainEntrance
-          onEnter={() => setIsLocked(false)}
-          onDone={() => setCurtainActive(false)}
+          onEnter={() => {
+            setIsLocked(false);
+            setShowHeroText(true);
+          }}
+          onDone={() => {
+            setCurtainActive(false);
+            setShowHeroText(true);
+          }}
           onStartMusic={startMusic}
           onShowHeroText={() => setShowHeroText(true)}
         />

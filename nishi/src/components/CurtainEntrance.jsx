@@ -22,7 +22,20 @@ export default function CurtainEntrance({ onEnter, onDone, onStartMusic, onShowH
     if (stage === "idle") {
       setStage("envelope");
       onStartMusic?.();
-      videoRef.current?.play().catch(() => {});
+      const v = videoRef.current;
+      if (v) {
+        v.play().catch(() => {
+          // If browser policy blocks video playback or fails, auto-reveal content
+          setTimeout(() => {
+            if (!entered) {
+              onEnter?.();
+              setEntered(true);
+              onShowHeroText?.();
+              startFading();
+            }
+          }, 1500);
+        });
+      }
     }
   };
 
@@ -100,6 +113,14 @@ export default function CurtainEntrance({ onEnter, onDone, onStartMusic, onShowH
         style={{ opacity: isVideoVisible ? 1 : 0 }}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleEnded}
+        onError={() => {
+          if (!entered) {
+            onEnter?.();
+            setEntered(true);
+            onShowHeroText?.();
+            startFading();
+          }
+        }}
         playsInline
         muted
         preload="auto"

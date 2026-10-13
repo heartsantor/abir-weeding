@@ -87,20 +87,24 @@ export default function RsvpSection() {
           className="w-full h-auto"
           draggable={false}
         />
-        <div className="absolute inset-x-[16%] top-[26%] bottom-[14%] flex flex-col items-center justify-start text-center text-primary">
-          <h2 className="font-display leading-none" style={{ fontSize: "9cqw" }}>
-            {heading}
-          </h2>
-          <p className="font-body italic" style={{ fontSize: "3.2cqw", marginTop: "3cqw" }}>
-            {deadline}
-          </p>
+        <div className="absolute inset-x-[12%] top-[16%] bottom-[7%] flex flex-col items-center justify-between text-center text-primary px-1 sm:px-3">
+          <div>
+            <h2 className="font-display font-bold leading-none text-primary" style={{ fontSize: "7.5cqw" }}>
+              {heading}
+            </h2>
+            <p className="font-body italic text-primary/80" style={{ fontSize: "2.8cqw", marginTop: "1.5cqw" }}>
+              {deadline}
+            </p>
+          </div>
 
           {submitted ? (
-            <p className="font-body italic" style={{ fontSize: "3.4cqw", marginTop: "8cqw" }}>
-              {successMessage}
-            </p>
+            <div className="flex-1 flex items-center justify-center px-4">
+              <p className="font-body italic text-primary font-medium" style={{ fontSize: "3.6cqw" }}>
+                {successMessage}
+              </p>
+            </div>
           ) : (
-            <form onSubmit={handleSubmit} className="w-full text-left" style={{ marginTop: "6cqw" }}>
+            <form onSubmit={handleSubmit} className="w-full text-left flex flex-col justify-between flex-1 py-1" style={{ marginTop: "3cqw" }}>
               <input
                 type="text"
                 value={honeypot}
@@ -110,62 +114,69 @@ export default function RsvpSection() {
                 aria-hidden="true"
                 className="absolute left-[-9999px] h-0 w-0 opacity-0"
               />
-              <label className="font-body block italic" style={{ fontSize: "3.4cqw" }}>
-                {fullNameLabel}
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full border-0 border-b border-primary/50 bg-transparent font-body text-primary outline-none focus:border-primary"
-                style={{ fontSize: "3.2cqw", paddingBottom: "1cqw", marginTop: "1.5cqw" }}
-              />
 
-              <div className="flex items-center" style={{ gap: "3cqw", marginTop: "5cqw" }}>
-                <span className="font-body italic" style={{ fontSize: "3.4cqw" }}>
-                  {attendanceQuestion}
-                </span>
-                {[
-                  { val: "yes", label: yesLabel },
-                  { val: "no", label: noLabel }
-                ].map((opt) => (
-                  <button
-                    key={opt.val}
-                    type="button"
-                    onClick={() => setAttendance(opt.val)}
-                    className="flex items-center font-body capitalize text-primary cursor-pointer"
-                    style={{ gap: "1.2cqw", fontSize: "3.4cqw" }}
-                  >
-                    <span
-                      className="inline-flex items-center justify-center border border-primary/60"
-                      style={{ width: "3cqw", height: "3cqw" }}
-                    >
-                      {attendance === opt.val && (
-                        <span className="bg-primary" style={{ width: "1.6cqw", height: "1.6cqw" }} />
-                      )}
-                    </span>
-                    {opt.label}
-                  </button>
-                ))}
+              <div>
+                <label className="font-body block italic text-primary/90" style={{ fontSize: "3cqw" }}>
+                  {fullNameLabel}
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full border-0 border-b border-primary/50 bg-background/25 font-body text-primary outline-none focus:border-primary"
+                  style={{ fontSize: "3.2cqw", padding: "0.8cqw 0", marginTop: "0.5cqw" }}
+                />
               </div>
 
-              <label className="font-body mt-0 block italic" style={{ fontSize: "3.4cqw", marginTop: "5cqw" }}>
-                {dietaryLabel}
-              </label>
-              <input
-                type="text"
-                value={diet}
-                onChange={(e) => setDiet(e.target.value)}
-                className="w-full border-0 border-b border-primary/50 bg-transparent font-body text-primary outline-none focus:border-primary"
-                style={{ fontSize: "3.2cqw", paddingBottom: "1cqw", marginTop: "1.5cqw" }}
-              />
+              <div style={{ marginTop: "2cqw" }}>
+                <span className="font-body italic block text-primary/90" style={{ fontSize: "3cqw", marginBottom: "1cqw" }}>
+                  {attendanceQuestion}
+                </span>
+                <div className="flex flex-wrap items-center gap-3 sm:gap-5">
+                  {[
+                    { val: "yes", label: yesLabel },
+                    { val: "no", label: noLabel }
+                  ].map((opt) => (
+                    <button
+                      key={opt.val}
+                      type="button"
+                      onClick={() => setAttendance(opt.val)}
+                      className="flex items-center font-body text-primary cursor-pointer hover:opacity-90"
+                      style={{ gap: "1.5cqw", fontSize: "3cqw" }}
+                    >
+                      <span
+                        className="inline-flex items-center justify-center rounded-full border border-primary/70 bg-background/60"
+                        style={{ width: "3.6cqw", height: "3.6cqw" }}
+                      >
+                        {attendance === opt.val && (
+                          <span className="bg-primary rounded-full" style={{ width: "2cqw", height: "2cqw" }} />
+                        )}
+                      </span>
+                      <span className="font-medium">{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-              <div className="flex justify-center" style={{ marginTop: "7cqw" }}>
+              <div style={{ marginTop: "2cqw" }}>
+                <label className="font-body block italic text-primary/90" style={{ fontSize: "3cqw" }}>
+                  {dietaryLabel}
+                </label>
+                <input
+                  type="text"
+                  value={diet}
+                  onChange={(e) => setDiet(e.target.value)}
+                  className="w-full border-0 border-b border-primary/50 bg-background/25 font-body text-primary outline-none focus:border-primary"
+                  style={{ fontSize: "3.2cqw", padding: "0.8cqw 0", marginTop: "0.5cqw" }}
+                />
+              </div>
+
+              <div className="flex justify-center" style={{ marginTop: "3.5cqw" }}>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="rounded-full border border-primary/30 bg-background/70 font-body text-primary shadow-sm transition-colors hover:bg-background disabled:opacity-60 cursor-pointer"
-                  style={{ fontSize: "3.4cqw", padding: "1.6cqw 8cqw" }}
+                  className="rounded-full border border-primary/40 bg-background/90 font-body text-primary font-semibold shadow-xs transition-transform hover:scale-105 active:scale-95 disabled:opacity-60 cursor-pointer"
+                  style={{ fontSize: "3.2cqw", padding: "1.8cqw 7cqw" }}
                 >
                   {isPending ? sendingLabel : sendLabel}
                 </button>

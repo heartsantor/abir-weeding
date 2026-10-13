@@ -7,6 +7,8 @@ export default function HeroSection({ showText, onVideoEnded }) {
   const { t, lang } = useLanguage();
   const [visible, setVisible] = useState(false);
 
+  const isVisible = visible || showText;
+
   useEffect(() => {
     if (showText && !visible) {
       setVisible(true);
@@ -15,9 +17,9 @@ export default function HeroSection({ showText, onVideoEnded }) {
   }, [showText, visible, onVideoEnded]);
 
   const anim = (delay) => ({
-    opacity: visible ? 1 : 0,
-    transform: visible ? "translateY(0)" : "translateY(12px)",
-    transition: `opacity 1400ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform 1400ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? "translateY(0)" : "translateY(12px)",
+    transition: `opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`
   });
 
   const name1 = lang === "bn" ? "নিশি" : "Nishi";
@@ -30,69 +32,74 @@ export default function HeroSection({ showText, onVideoEnded }) {
   const locationStr = t(data?.hero?.locationDisplay) || "Benarosi Community Center · Dhaka";
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden bg-background">
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="relative min-h-[90vh] sm:min-h-screen flex items-center justify-center overflow-hidden bg-background py-6 px-3 sm:px-6">
+      <div className="relative w-full max-w-[420px] sm:max-w-[480px] aspect-[1072/1920] flex items-center justify-center">
+        {/* Ornate Oval Floral Frame */}
         <img
           src="/assets/hero-frame-oval.png"
           alt=""
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
           draggable={false}
         />
-      </div>
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6">
-        {/* Monogram */}
-        <div style={anim(0)} className="mb-2">
-          <img
-            src="/assets/monogram-an-transparent.png"
-            alt="AN Monogram"
-            className="w-16 sm:w-20 h-auto drop-shadow-sm select-none pointer-events-none mx-auto opacity-85"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
-          />
-        </div>
 
-        {/* Short Names in Large Elegant Typography */}
-        <h1 className="font-display font-bold leading-[1.05] text-primary text-5xl sm:text-7xl md:text-8xl">
-          <span className="block" style={anim(200)}>
-            {name1}
-          </span>
-          <span className="block my-1 text-4xl sm:text-5xl" style={anim(700)}>
-            &
-          </span>
-          <span className="block" style={anim(1200)}>
-            {name2}
-          </span>
-        </h1>
+        {/* Content nestled precisely in the oval aperture */}
+        <div className="relative z-20 flex flex-col items-center justify-center text-center w-[62%] h-[52%] px-2">
+          {/* Monogram */}
+          <div style={anim(0)} className="mb-1.5 shrink-0">
+            <img
+              src="/assets/monogram-an-transparent.png"
+              alt="AN Monogram"
+              className="w-12 sm:w-16 h-auto drop-shadow-sm select-none pointer-events-none mx-auto opacity-90"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          </div>
 
-        {/* Sub-label with full names */}
-        <p
-          className="font-body text-[11px] sm:text-xs text-primary/80 mt-3 max-w-sm tracking-wide"
-          style={anim(1600)}
-        >
-          {fullName1} · {fullName2}
-        </p>
+          {/* Short Names in Large Elegant Typography */}
+          <h1 className="font-display font-bold leading-[0.98] text-primary text-3xl sm:text-5xl md:text-6xl shrink-0">
+            <span className="block" style={anim(150)}>
+              {name1}
+            </span>
+            <span className="block my-0.5 text-2xl sm:text-3xl text-primary/80" style={anim(450)}>
+              &
+            </span>
+            <span className="block" style={anim(800)}>
+              {name2}
+            </span>
+          </h1>
 
-        {/* Date, Time & Venue */}
-        <div className="mt-8 md:mt-12 space-y-1.5">
-          <p
-            className="font-body text-xs md:text-sm tracking-[0.16em] uppercase text-primary/90 font-medium"
-            style={anim(2000)}
+          {/* Sub-label with full names */}
+          <div
+            className="font-body text-[10px] sm:text-xs text-primary/85 mt-2 max-w-[220px] sm:max-w-[260px] leading-tight"
+            style={anim(1100)}
           >
-            {dateStr}
-          </p>
-          <p
-            className="font-body text-[11px] md:text-xs tracking-[0.14em] uppercase text-primary/80"
-            style={anim(2400)}
-          >
-            {timeStr}
-          </p>
-          <p
-            className="font-body text-xs md:text-sm tracking-[0.16em] uppercase text-primary font-semibold pt-1"
-            style={anim(2800)}
-          >
-            {locationStr}
-          </p>
+            <p className="line-clamp-1">{fullName1}</p>
+            <p className="text-[9px] sm:text-[10px] text-primary/60 my-0.5">&</p>
+            <p className="line-clamp-1">{fullName2}</p>
+          </div>
+
+          {/* Date, Time & Venue */}
+          <div className="mt-4 sm:mt-6 space-y-1 shrink-0">
+            <p
+              className="font-body text-[9.5px] sm:text-xs tracking-[0.14em] uppercase text-primary/90 font-medium"
+              style={anim(1400)}
+            >
+              {dateStr}
+            </p>
+            <p
+              className="font-body text-[9px] sm:text-[11px] tracking-[0.12em] uppercase text-primary/80"
+              style={anim(1700)}
+            >
+              {timeStr}
+            </p>
+            <p
+              className="font-body text-[9.5px] sm:text-xs tracking-[0.14em] uppercase text-primary font-semibold pt-0.5"
+              style={anim(2000)}
+            >
+              {locationStr}
+            </p>
+          </div>
         </div>
       </div>
     </section>

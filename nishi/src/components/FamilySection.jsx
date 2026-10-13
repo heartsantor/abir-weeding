@@ -49,7 +49,7 @@ export default function FamilySection() {
           <h3 className="text-base font-bold font-body text-primary mb-2">
             {wishesTitle}
           </h3>
-          <p className="text-xs sm:text-sm font-body text-foreground/80 leading-relaxed whitespace-pre-line">
+          <p className="text-xs sm:text-sm font-body text-foreground/90 leading-relaxed whitespace-pre-line font-medium">
             {wishesNames}
           </p>
         </motion.div>
@@ -68,7 +68,7 @@ export default function FamilySection() {
           <h3 className="text-base font-bold font-body text-primary mb-2">
             {receptionTitle}
           </h3>
-          <p className="text-xs sm:text-sm font-body text-foreground/80 leading-relaxed whitespace-pre-line">
+          <p className="text-xs sm:text-sm font-body text-foreground/90 leading-relaxed whitespace-pre-line font-medium">
             {receptionNames}
           </p>
         </motion.div>
@@ -88,7 +88,7 @@ export default function FamilySection() {
         <h3 className="text-base font-bold font-body text-primary mb-2">
           {youngstersTitle}
         </h3>
-        <p className="text-xs sm:text-sm font-body text-foreground/75 leading-relaxed max-w-xl">
+        <p className="text-xs sm:text-sm font-body text-foreground/85 leading-relaxed max-w-xl font-medium">
           {youngstersNames}
         </p>
       </motion.div>

@@ -30,42 +30,43 @@ export default function ProgrammeSection() {
           className="w-full h-auto select-none pointer-events-none"
           draggable={false}
         />
-        <div className="absolute inset-y-0 left-[44%] right-[8%] flex flex-col justify-center items-center text-foreground pointer-events-none select-none">
+        <div className="absolute inset-y-0 left-[39%] right-[6%] flex flex-col justify-center items-center text-foreground px-2">
           <p
-            className="font-display leading-none"
-            style={{ fontSize: "8cqw", marginBottom: "9cqw" }}
+            className="font-display leading-none text-primary font-bold"
+            style={{ fontSize: "6.8cqw", marginBottom: "4.5cqw" }}
           >
             {heading}
           </p>
-          <div className="flex flex-col" style={{ gap: "8cqw" }}>
+          <div className="flex flex-col w-full max-w-[50cqw]" style={{ gap: "3.8cqw" }}>
             {items.map((e, idx) => {
               const formattedTime = formatNum(e.time);
               const label = t(e.label);
               return (
-                <div key={idx} className="flex items-baseline">
+                <div key={idx} className="flex items-baseline w-full">
                   <span
-                    className="font-body text-right"
-                    style={{ fontSize: "4.6cqw", width: "10cqw" }}
+                    className="font-body text-right font-medium text-primary shrink-0"
+                    style={{ fontSize: "3.8cqw", width: "9cqw" }}
                   >
                     {formattedTime}
                   </span>
                   <span
-                    className="font-body uppercase"
+                    className="font-body uppercase text-primary/75 shrink-0"
                     style={{
-                      fontSize: "3cqw",
-                      marginLeft: "1.2cqw",
-                      letterSpacing: "0.06em"
+                      fontSize: "2.4cqw",
+                      marginLeft: "1cqw",
+                      letterSpacing: "0.05em"
                     }}
                   >
                     {e.period}
                   </span>
                   <span
-                    className="font-display text-left"
+                    className="font-display text-left font-semibold text-primary"
                     style={{
-                      fontSize: "6.5cqw",
-                      marginLeft: "2.5cqw",
-                      width: "20cqw",
-                      lineHeight: 1
+                      fontSize: "4.2cqw",
+                      marginLeft: "2.2cqw",
+                      flex: 1,
+                      minWidth: 0,
+                      lineHeight: 1.2
                     }}
                   >
                     {label}

@@ -1,0 +1,456 @@
+{
+  "opening": {
+    "monogram": "/assets/monogram-an-transparent.png",
+    "bismillah": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "subtitle": {
+      "bn": "শুভ বিবাহ ও প্রীতিভোজ অনুষ্ঠান",
+      "en": "Wedding Ceremony & Grand Feast"
+    },
+    "openButton": {
+      "bn": "দাওয়াতনামা খুলুন",
+      "en": "Open Invitation"
+    },
+    "skip": {
+      "en": "Skip",
+      "bn": "স্কিপ করুন"
+    }
+  },
+  "invitationLetter": {
+    "bismillahTitle": {
+      "bn": "বিসমিল্লাহির রাহমানির রাহীম",
+      "en": "Bismillahir Rahmanir Rahim"
+    },
+    "bismillahSub": {
+      "bn": "পরম করুণাময় ও অসীম দয়ালু আল্লাহর নামে",
+      "en": "In the Name of Allah, the Most Gracious, the Most Merciful"
+    },
+    "salutation": {
+      "bn": "জনাব / জনাবা,",
+      "en": "Dear Sir / Madam,"
+    },
+    "greeting": {
+      "bn": "আসসালামু আলাইকুম,",
+      "en": "Assalamu Alaikum,"
+    },
+    "body": {
+      "bn": "পরম করুণাময় আল্লাহ তা'য়ালার অশেষ রহমতে আসছে ২৩শে অক্টোবর ২০২৬ইং (৭ই কার্তিক ১৪৩৩বাং) রোজ শুক্রবার মোঃ মোস্তফা জামাল ভুঁইয়া সাহেবের প্রথমা কন্যা মোসাম্মৎ সোমাইয়া আক্তার (নিশি) এর সাথে মোঃ আমিনুর রহমান (আমিন) সাহেবের একমাত্র পুত্র মোঃ আব্দুল রামিম (আবির) এর শুভ বিবাহ অনুষ্ঠানের আয়োজন করা হয়েছে। উক্ত অনুষ্ঠানে আপনার/আপনাদের উপস্থিতি ও দোয়া একান্তভাবে কামনা করছি।",
+      "en": "By the grace and mercy of Almighty Allah, on Friday, 23 October 2026 (7 Kartik 1433 Bengali Era), the wedding ceremony of Mosammet Somaiya Akter (Nishi), beloved daughter of Md. Mostofa Zamal Bhuiyan and Rojina Akter, with Md. Abdul Ramim (Abir), beloved son of Md. Aminur Rahman (Amin) and Rahana Begum, has been arranged at Benarosi Community Center. We cordially invite you and your family to attend the wedding ceremony and grace the occasion with your presence and blessings."
+    }
+  },
+  "couple": {
+    "eyebrow": {
+      "bn": "আমরা আনন্দের সাথে আপনাকে ও আপনার পরিবারকে আমন্ত্রণ জানাচ্ছি আমাদের শুভ বিবাহ অনুষ্ঠানে",
+      "en": "We cordially invite you with your family for the wedding ceremony of"
+    },
+    "name1": {
+      "en": "Mosammet Somaiya Akter (Nishi)",
+      "bn": "মোসাম্মৎ সোমাইয়া আক্তার (নিশি)"
+    },
+    "name2": {
+      "en": "Md. Abdul Ramim (Abir)",
+      "bn": "মোঃ আব্দুল রামিম (আবির)"
+    },
+    "bride": {
+      "tag": {
+        "bn": "কনে সাজে",
+        "en": "The Bride"
+      },
+      "name": {
+        "bn": "মোসাম্মৎ সোমাইয়া আক্তার\n(নিশি)",
+        "en": "Mosammet Somaiya Akter\n(Nishi)"
+      },
+      "father": {
+        "bn": "মোঃ মোস্তফা জামাল ভুঁইয়া",
+        "en": "Md. Mostofa Zamal Bhuiyan"
+      },
+      "mother": {
+        "bn": "রোজিনা আক্তার",
+        "en": "Rojina Akter"
+      },
+      "parents": {
+        "bn": "পিতা: মোঃ মোস্তফা জামাল ভুঁইয়া\nমাতা: রোজিনা আক্তার",
+        "en": "Daughter of Mr. Md. Mostofa Zamal Bhuiyan\n& Mrs. Rojina Akter"
+      },
+      "address": {
+        "bn": "৩৬/১৬ রেইনবো টাওয়ার, রোড-৩, ওয়ার্ড-৬২, ছনটেক,\nযাত্রাবাড়ী, ঢাকা-১২৩৬",
+        "en": "36/16 Rainbow Tower, Road-3, Ward-62, Sontek,\nJatrabari, Dhaka-1236"
+      }
+    },
+    "groom": {
+      "tag": {
+        "bn": "বর বেশে",
+        "en": "The Groom"
+      },
+      "name": {
+        "bn": "মোঃ আব্দুল রামিম\n(আবির)",
+        "en": "Md. Abdul Ramim\n(Abir)"
+      },
+      "father": {
+        "bn": "মোঃ আমিনুর রহমান (আমিন)",
+        "en": "Md. Aminur Rahman (Amin)"
+      },
+      "mother": {
+        "bn": "রেহেনা বেগম",
+        "en": "Rahana Begum"
+      },
+      "parents": {
+        "bn": "পিতা: মোঃ আমিনুর রহমান (আমিন)\nমাতা: রেহেনা বেগম",
+        "en": "Son of Mr. Md. Aminur Rahman (Amin)\n& Mrs. Rahana Begum"
+      },
+      "address": {
+        "bn": "৭৯ নয়াগাঁও পূর্বপাড়া, পঞ্চসার, মুন্সীগঞ্জ-১৫০০",
+        "en": "79 Noyagaon Purbo Para, Panchasar, Munshiganj-1500"
+      }
+    },
+    "wedding_date": "2026-10-23",
+    "wedding_time": "1:30 PM",
+    "venue_name": {
+      "en": "Benarosi Community Center",
+      "bn": "বেনারসি কমিউনিটি সেন্টার"
+    },
+    "venue_city": {
+      "en": "Jatrabari, Dhaka",
+      "bn": "যাত্রাবাড়ী, ঢাকা"
+    },
+    "venue_country": {
+      "en": "Bangladesh",
+      "bn": "বাংলাদেশ"
+    },
+    "venue_location_full": {
+      "en": "Benarosi Community Center · Dhaka · 23 October 2026",
+      "bn": "বেনারসি কমিউনিটি সেন্টার · ঢাকা · ২৩ অক্টোবর ২০২৬"
+    },
+    "maps_url": "https://maps.app.goo.gl/CG6Z9D7U1L7xjsui6"
+  },
+  "hero": {
+    "dateDisplay": {
+      "en": "Friday, 23 October 2026",
+      "bn": "২৩শে অক্টোবর ২০২৬ • শুক্রবার"
+    },
+    "timeDisplay": {
+      "en": "1:30 PM (Grand Feast)",
+      "bn": "দুপুর ১:৩০ ঘটিকা (প্রীতিভোজ)"
+    },
+    "locationDisplay": {
+      "en": "Benarosi Community Center · Dhaka",
+      "bn": "বেনারসি কমিউনিটি সেন্টার · ঢাকা"
+    }
+  },
+  "saveDate": {
+    "label": {
+      "bn": "আমাদের শুভ বিবাহের দিন",
+      "en": "OUR WEDDING CEREMONY"
+    },
+    "day": {
+      "bn": "২৩",
+      "en": "23"
+    },
+    "month": {
+      "bn": "অক্টোবর",
+      "en": "OCTOBER"
+    },
+    "year": {
+      "bn": "২০২৬ • শুক্রবার",
+      "en": "2026 • FRIDAY"
+    },
+    "bengaliEra": {
+      "bn": "৭ই কার্তিক ১৪৩৩ বাং",
+      "en": "7 Kartik 1433 Bengali Era"
+    },
+    "targetDate": "2026-10-23T13:30:00"
+  },
+  "countdown": {
+    "title": {
+      "en": "Counting down the days to the wedding",
+      "bn": "শুভ বিবাহের দিন গণনা"
+    },
+    "labels": {
+      "days": {
+        "en": "Days",
+        "bn": "দিন"
+      },
+      "hours": {
+        "en": "Hours",
+        "bn": "ঘণ্টা"
+      },
+      "minutes": {
+        "en": "Minutes",
+        "bn": "মিনিট"
+      },
+      "seconds": {
+        "en": "Seconds",
+        "bn": "সেকেন্ড"
+      }
+    }
+  },
+  "whenWhere": {
+    "heading": {
+      "en": "When & Where",
+      "bn": "কখন ও কোথায়"
+    },
+    "subtitle": {
+      "en": "Wedding Ceremony & Grand Feast",
+      "bn": "শুভ বিবাহ ও প্রীতিভোজ অনুষ্ঠান"
+    },
+    "ceremonyDate": {
+      "en": "Friday, 23 October 2026",
+      "bn": "২৩শে অক্টোবর ২০২৬ • রোজ শুক্রবার"
+    },
+    "ceremonyTime": {
+      "en": "Ceremony & Feast at 1:30 PM",
+      "bn": "দুপুর ১:৩০ ঘটিকা (প্রীতিভোজ)"
+    },
+    "buttonText": {
+      "en": "View on Google Maps",
+      "bn": "গুগল ম্যাপে লোকেশন দেখুন"
+    }
+  },
+  "venue": {
+    "badge": {
+      "en": "Our Venue",
+      "bn": "আমাদের ভেন্যু"
+    },
+    "title": {
+      "en": "Benarosi Community Center",
+      "bn": "বেনারসি কমিউনিটি সেন্টার"
+    },
+    "location": {
+      "en": "Jatrabari, Dhaka, Bangladesh",
+      "bn": "যাত্রাবাড়ী, ঢাকা, বাংলাদেশ"
+    },
+    "description": {
+      "en": "A graceful and hospitable venue ready to welcome all our beloved guests, friends, and family for this auspicious wedding celebration.",
+      "bn": "সুপরিসর ও মনোরম পরিবেশে আমাদের সকল প্রিয় মেহমান, আত্মীয়স্বজন ও শুভাকাঙ্ক্ষীদের বরণ করে নিতে প্রস্তুত বেনারসি কমিউনিটি সেন্টার।"
+    },
+    "buttonText": {
+      "en": "Open in Google Maps",
+      "bn": "গুগল ম্যাপে লোকেশন দেখুন"
+    }
+  },
+  "celebration": {
+    "heading": {
+      "en": "The Celebrations",
+      "bn": "শুভ বিবাহ অনুষ্ঠান"
+    },
+    "badge": {
+      "en": "A Blessed Union",
+      "bn": "পবিত্র বন্ধন ও শুভ মিলন"
+    },
+    "villaLine1": {
+      "en": "Benarosi",
+      "bn": "বেনারসি"
+    },
+    "villaLine2": {
+      "en": "Community Center",
+      "bn": "কমিউনিটি সেন্টার"
+    },
+    "detailLine1": {
+      "en": "Solemn Wedding Ceremony & Akd",
+      "bn": "শুভ বিবাহ ও পবিত্র আকদ অনুষ্ঠান"
+    },
+    "detailLine2": {
+      "en": "Followed by a Traditional Grand Feast",
+      "bn": "অনুষ্ঠানস্থলে ঐতিহ্যবাহী রাজকীয় প্রীতিভোজ"
+    },
+    "date": {
+      "en": "Friday, 23 October 2026",
+      "bn": "শুক্রবার, ২৩শে অক্টোবর ২০২৬"
+    },
+    "time": {
+      "en": "1:30 PM (Grand Feast)",
+      "bn": "দুপুর ১:৩০ ঘটিকা (প্রীতিভোজ)"
+    },
+    "buttonText": {
+      "en": "View on Map",
+      "bn": "গুগল ম্যাপে দেখুন"
+    },
+    "dressCodeTitle": {
+      "en": "Festive Traditional Formal",
+      "bn": "উৎসবমুখর ঐতিহ্যবাহী পোশাক"
+    },
+    "dressCodeDesc": {
+      "en": "Vibrant festive colors · Traditional formal wedding attire",
+      "bn": "উৎসবের উজ্জ্বল রঙ · মার্জিত ঐতিহ্যবাহী পাঞ্জাবি, শাড়ি ও ফরমাল পোশাক"
+    }
+  },
+  "dressCodeSection": {
+    "title": {
+      "en": "Dress Code",
+      "bn": "পোশাক রীতি"
+    },
+    "subtitle": {
+      "en": "Festive Traditional Formal",
+      "bn": "উৎসবমুখর ঐতিহ্যবাহী ফরমাল"
+    }
+  },
+  "programme": {
+    "heading": {
+      "en": "Programme",
+      "bn": "অনুষ্ঠানসূচি"
+    },
+    "items": [
+      {
+        "time": "1:30",
+        "period": "PM",
+        "label": {
+          "en": "Guest Welcome",
+          "bn": "মেহমান আগমন ও অভ্যর্থনা"
+        }
+      },
+      {
+        "time": "2:00",
+        "period": "PM",
+        "label": {
+          "en": "Groom's Arrival",
+          "bn": "বরযাত্রী আগমন ও বরণ"
+        }
+      },
+      {
+        "time": "2:30",
+        "period": "PM",
+        "label": {
+          "en": "Grand Feast",
+          "bn": "শুভ প্রীতিভোজ"
+        }
+      },
+      {
+        "time": "4:00",
+        "period": "PM",
+        "label": {
+          "en": "Wedding Vows & Akd",
+          "bn": "আকদ ও বিবাহ অনুষ্ঠান"
+        }
+      },
+      {
+        "time": "5:00",
+        "period": "PM",
+        "label": {
+          "en": "Photo & Blessings",
+          "bn": "ফটোসেশন ও বিদায়"
+        }
+      }
+    ]
+  },
+  "blessings": {
+    "wishes": {
+      "title": {
+        "bn": "-: শুভেচ্ছান্তে :-",
+        "en": "Best Wishes From"
+      },
+      "names": {
+        "bn": "মোঃ মোস্তফা জামাল ভুঁইয়া\nরোজিনা আক্তার\nপরিবারবর্গ",
+        "en": "Md. Mostofa Zamal Bhuiyan\nRojina Akter\n& Family"
+      }
+    },
+    "reception": {
+      "title": {
+        "bn": "-: অভ্যর্থনায় :-",
+        "en": "Cordially Welcomed By"
+      },
+      "names": {
+        "bn": "সকল আত্মীয়স্বজন ও শুভাকাঙ্ক্ষীবৃন্দ",
+        "en": "All Family Members, Relatives & Well-wishers"
+      }
+    },
+    "youngsters": {
+      "title": {
+        "bn": "-: হৈ চৈ :-",
+        "en": "The Little Stars"
+      },
+      "names": {
+        "bn": "মায়ান, নুজাইম, মুয়াজ, নুহাশ, রিয়ান, রাফা, রিমি, অর্নি, আবিবা, নিরা, নুসরাত, নাবিলা, তন্ময়, নাবিল ও মাহবুব",
+        "en": "Mayan, Nuzaim, Muaz, Nuhash, Riyan, Rafa, Rimi, Orni, Abiba, Nira, Nusrat, Nabila, Tonmoy, Nabil & Mahbub"
+      }
+    },
+    "contacts": [
+      "01829605959"
+    ]
+  },
+  "gifts": {
+    "heading": {
+      "en": "A Thoughtful Gesture",
+      "bn": "আন্তরিক নিবেদন"
+    },
+    "line1": {
+      "en": "Your presence and prayers are our greatest gift.",
+      "bn": "আপনাদের উপস্থিতি ও আন্তরিক দোয়াই আমাদের সেরা উপহার।"
+    },
+    "line2": {
+      "en": "May Almighty Allah bless this new beginning",
+      "bn": "পরম করুণাময় আল্লাহ তা'আলা যেন নতুন জীবনের সূচনায়"
+    },
+    "line3": {
+      "en": "with peace, love, and happiness.",
+      "bn": "অশেষ সুখ, শান্তি ও বরকত দান করেন।"
+    },
+    "line4": {
+      "en": "Please keep the new couple in your prayers.",
+      "bn": "নবদম্পতির জন্য আপনাদের দোয়া একান্তভাবে কাম্য।"
+    },
+    "iban": "যোগাযোগ: 01829605959"
+  },
+  "guest": {
+    "title": {
+      "en": "Dear Guest",
+      "bn": "প্রিয় অতিথি"
+    },
+    "message": {
+      "en": "Your presence, blessing and love will make our celebration truly complete.",
+      "bn": "আপনার উপস্থিতি, আশীর্বাদ ও ভালোবাসা আমাদের এই উৎসবকে পরিপূর্ণ করবে।"
+    }
+  },
+  "rsvp": {
+    "heading": {
+      "en": "RSVP",
+      "bn": "উপস্থিতি নিশ্চিত করুন"
+    },
+    "deadline": {
+      "en": "Kindly confirm your presence before the 20th of October, 2026.",
+      "bn": "অনুগ্রহ করে ২০শে অক্টোবর ২০২৬ এর মধ্যে উপস্থিতি নিশ্চিত করুন।"
+    },
+    "successMessage": {
+      "en": "Thank you! We look forward to welcoming you with warmth.",
+      "bn": "ধন্যবাদ! আপনাদের বরণ করে নিতে আমরা সানন্দে অপেক্ষা করছি।"
+    },
+    "fullNameLabel": {
+      "en": "Full name",
+      "bn": "আপনার পূর্ণ নাম"
+    },
+    "attendanceQuestion": {
+      "en": "Will you attend the ceremony?",
+      "bn": "আপনি কি অনুষ্ঠানে উপস্থিত থাকবেন?"
+    },
+    "yesOption": {
+      "en": "Yes, delighted to attend",
+      "bn": "হ্যাঁ, উপস্থিত থাকব"
+    },
+    "noOption": {
+      "en": "Regretfully cannot attend",
+      "bn": "উপস্থিত হতে পারছি না"
+    },
+    "dietaryLabel": {
+      "en": "Blessings / Message for the couple",
+      "bn": "নবদম্পতির জন্য শুভকামনা বার্তা / মন্তব্য"
+    },
+    "sendButton": {
+      "en": "Send RSVP",
+      "bn": "নিশ্চিত করুন"
+    },
+    "sendingButton": {
+      "en": "Sending…",
+      "bn": "পাঠানো হচ্ছে…"
+    }
+  },
+  "footer": {
+    "cantWait": {
+      "en": "We cannot wait to celebrate with you",
+      "bn": "আপনাদের সাথে শুভক্ষণটি উদযাপন করতে আমরা অধীর আগ্রহে অপেক্ষা করছি"
+    },
+    "madeWithLove": {
+      "en": "Crafted with love by",
+      "bn": "ভালোবাসায় তৈরি করেছেন"
+    },
+    "reference": "trialvo.com",
+    "referenceUrl": "https://trialvo.com"
+  }
+}

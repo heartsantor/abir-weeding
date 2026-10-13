@@ -10,7 +10,6 @@ import CoupleDetailsSection from "./components/CoupleDetailsSection";
 import WhenWhereSection from "./components/WhenWhereSection";
 import VenueSection from "./components/VenueSection";
 import CelebrationSection from "./components/CelebrationSection";
-import DressCodeSection from "./components/DressCodeSection";
 import ProgrammeSection from "./components/ProgrammeSection";
 import FamilySection from "./components/FamilySection";
 import GiftsSection from "./components/GiftsSection";
@@ -118,12 +117,7 @@ function InvitationApp() {
 
             <Divider />
 
-            {/* 8. Dress Code Frame */}
-            <DressCodeSection />
-
-            <Divider />
-
-            {/* 9. Programme on Linen Frame (Timeline from 1:30 PM to 5:00 PM) */}
+            {/* 8. Programme on Linen Frame (Timeline from 1:30 PM to 5:00 PM) */}
             <ProgrammeSection />
 
             <Divider />

@@ -24,15 +24,6 @@ export default function CelebrationSection() {
     data?.couple?.maps_url || "https://maps.app.goo.gl/CG6Z9D7U1L7xjsui6";
   const buttonText =
     t(data?.celebration?.buttonText) || (lang === "bn" ? "গুগল ম্যাপে দেখুন" : "View on Map");
-  const dressTitle =
-    t(data?.celebration?.dressCodeTitle) || (lang === "bn" ? "উৎসবমুখর ঐতিহ্যবাহী পোশাক" : "Festive Traditional Formal");
-  const dressDesc =
-    t(data?.celebration?.dressCodeDesc) ||
-    (lang === "bn"
-      ? "উৎসবের উজ্জ্বল রঙ · মার্জিত ঐতিহ্যবাহী পাঞ্জাবি, শাড়ি ও ফরমাল পোশাক"
-      : "Vibrant festive colors · Traditional formal wedding attire");
-  const dressLabel =
-    t(data?.dressCodeSection?.title) || (lang === "bn" ? "পোশাক রীতি" : "Dress Code");
 
   return (
     <section className="py-12 md:py-20 px-4 sm:px-6 overflow-hidden">
@@ -105,20 +96,6 @@ export default function CelebrationSection() {
               >
                 {buttonText}
               </a>
-
-              <div className="mt-8 pt-6 border-t border-foreground/15">
-                <p className="font-body text-[11px] sm:text-xs tracking-[0.25em] uppercase text-foreground/60 mb-2 font-semibold">
-                  {dressLabel}
-                </p>
-                <p className="font-display text-2xl sm:text-4xl text-foreground leading-tight font-bold">
-                  {dressTitle}
-                </p>
-                {dressDesc && (
-                  <p className="font-body text-xs sm:text-sm text-foreground/75 italic mt-2">
-                    {dressDesc}
-                  </p>
-                )}
-              </div>
             </motion.div>
           </div>
         </div>

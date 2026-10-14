@@ -11,7 +11,6 @@ import WhenWhereSection from "./components/WhenWhereSection";
 import VenueSection from "./components/VenueSection";
 import CelebrationSection from "./components/CelebrationSection";
 import ProgrammeSection from "./components/ProgrammeSection";
-import GiftsSection from "./components/GiftsSection";
 import FooterSection from "./components/FooterSection";
 import Divider from "./components/Divider";
 import AudioPlayer from "./components/AudioPlayer";
@@ -117,11 +116,6 @@ function InvitationApp() {
 
             {/* 8. Programme on Linen Frame (Timeline from 1:30 PM to 5:00 PM) */}
             <ProgrammeSection />
-
-            <Divider />
-
-            {/* 11. Gifts & Prayers Frame */}
-            <GiftsSection enabled={true} />
 
             {/* 13. Footer Frame */}
             <FooterSection />

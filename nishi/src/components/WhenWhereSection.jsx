@@ -38,7 +38,7 @@ export default function WhenWhereSection() {
           className="w-full h-auto select-none pointer-events-none"
           draggable={false}
         />
-        <div className="absolute inset-x-[10%] bottom-[6%] top-[58%] flex flex-col items-center justify-between text-center px-3 sm:px-6 pb-1 sm:pb-3">
+        <div className="absolute inset-x-[10%] bottom-[5%] top-[61.5%] flex flex-col items-center justify-evenly text-center px-3 sm:px-6 pb-1 sm:pb-3">
           <div>
             <h2 className="font-display text-[clamp(1.35rem,6.2cqw,2.4rem)] text-primary font-bold leading-tight">
               {heading}

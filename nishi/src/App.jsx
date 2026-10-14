@@ -11,9 +11,7 @@ import WhenWhereSection from "./components/WhenWhereSection";
 import VenueSection from "./components/VenueSection";
 import CelebrationSection from "./components/CelebrationSection";
 import ProgrammeSection from "./components/ProgrammeSection";
-import FamilySection from "./components/FamilySection";
 import GiftsSection from "./components/GiftsSection";
-import RsvpSection from "./components/RsvpSection";
 import FooterSection from "./components/FooterSection";
 import Divider from "./components/Divider";
 import AudioPlayer from "./components/AudioPlayer";
@@ -122,18 +120,8 @@ function InvitationApp() {
 
             <Divider />
 
-            {/* 10. Family & Blessings Section (শুভেচ্ছান্তে, অভ্যর্থনায়, হৈ চৈ, যোগাযোগ) */}
-            <FamilySection />
-
-            <Divider />
-
             {/* 11. Gifts & Prayers Frame */}
             <GiftsSection enabled={true} />
-
-            <Divider />
-
-            {/* 12. RSVP Form Frame */}
-            <RsvpSection />
 
             {/* 13. Footer Frame */}
             <FooterSection />

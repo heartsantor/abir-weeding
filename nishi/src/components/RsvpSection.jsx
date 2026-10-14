@@ -87,12 +87,12 @@ export default function RsvpSection() {
           className="w-full h-auto"
           draggable={false}
         />
-        <div className="absolute inset-x-[12%] top-[16%] bottom-[7%] flex flex-col items-center justify-between text-center text-primary px-1 sm:px-3">
+        <div className="absolute inset-x-[21%] top-[21%] bottom-[16%] flex flex-col items-center justify-between text-center text-primary px-1 sm:px-3">
           <div>
-            <h2 className="font-display font-bold leading-none text-primary" style={{ fontSize: "7.5cqw" }}>
+            <h2 className="font-display font-bold leading-none text-primary" style={{ fontSize: heading.length > 8 ? "4.8cqw" : "7.5cqw" }}>
               {heading}
             </h2>
-            <p className="font-body italic text-primary/80" style={{ fontSize: "2.8cqw", marginTop: "1.5cqw" }}>
+            <p className="font-body italic text-primary/80 text-balance" style={{ fontSize: "2.8cqw", marginTop: "1.5cqw", paddingInline: "2cqw" }}>
               {deadline}
             </p>
           </div>
@@ -132,7 +132,7 @@ export default function RsvpSection() {
                 <span className="font-body italic block text-primary/90" style={{ fontSize: "3cqw", marginBottom: "1cqw" }}>
                   {attendanceQuestion}
                 </span>
-                <div className="flex flex-wrap items-center gap-3 sm:gap-5">
+                <div className="flex flex-col items-start" style={{ gap: "1.5cqw" }}>
                   {[
                     { val: "yes", label: yesLabel },
                     { val: "no", label: noLabel }

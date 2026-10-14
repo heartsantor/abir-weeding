@@ -30,14 +30,14 @@ export default function ProgrammeSection() {
           className="w-full h-auto select-none pointer-events-none"
           draggable={false}
         />
-        <div className="absolute inset-y-0 left-[39%] right-[6%] flex flex-col justify-center items-center text-foreground px-2">
+        <div className="absolute inset-y-0 left-[42%] right-[7%] flex flex-col justify-center items-center text-foreground px-2">
           <p
             className="font-display leading-none text-primary font-bold"
             style={{ fontSize: "6.8cqw", marginBottom: "4.5cqw" }}
           >
             {heading}
           </p>
-          <div className="flex flex-col w-full max-w-[50cqw]" style={{ gap: "3.8cqw" }}>
+          <div className="flex flex-col w-full max-w-[48cqw]" style={{ gap: "3.8cqw" }}>
             {items.map((e, idx) => {
               const formattedTime = formatNum(e.time);
               const label = t(e.label);
@@ -62,8 +62,8 @@ export default function ProgrammeSection() {
                   <span
                     className="font-display text-left font-semibold text-primary"
                     style={{
-                      fontSize: "4.2cqw",
-                      marginLeft: "2.2cqw",
+                      fontSize: "3.9cqw",
+                      marginLeft: "1.8cqw",
                       flex: 1,
                       minWidth: 0,
                       lineHeight: 1.2

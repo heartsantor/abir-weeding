@@ -44,18 +44,6 @@ export default function HeroSection({ showText, onVideoEnded }) {
 
         {/* Content nestled precisely in the oval aperture */}
         <div className="relative z-20 flex flex-col items-center justify-center text-center w-[62%] h-[52%] px-2">
-          {/* Monogram */}
-          <div style={anim(0)} className="mb-1.5 shrink-0">
-            <img
-              src="/assets/monogram-an-transparent.png"
-              alt="AN Monogram"
-              className="w-12 sm:w-16 h-auto drop-shadow-sm select-none pointer-events-none mx-auto opacity-90"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
-            />
-          </div>
-
           {/* Short Names in Large Elegant Typography */}
           <h1 className="font-display font-bold leading-[0.98] text-primary text-3xl sm:text-5xl md:text-6xl shrink-0">
             <span className="block" style={anim(150)}>
@@ -94,7 +82,7 @@ export default function HeroSection({ showText, onVideoEnded }) {
               {timeStr}
             </p>
             <p
-              className="font-body text-[9.5px] sm:text-xs tracking-[0.14em] uppercase text-primary font-semibold pt-0.5"
+              className="font-body text-[9.5px] sm:text-xs tracking-[0.14em] uppercase text-primary font-semibold pt-0.5 text-balance"
               style={anim(2000)}
             >
               {locationStr}
